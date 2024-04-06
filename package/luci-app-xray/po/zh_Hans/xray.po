@@ -1,0 +1,23 @@
+msgid "Enable"
+msgstr "启用"
+
+msgid "Port"
+msgstr "端口"
+
+msgid "Log Level"
+msgstr "日志等级"
+
+msgid "Basic Settings"
+msgstr "基础设置"
+
+msgid "Server Address"
+msgstr "服务器地址"
+
+msgid "UUID"
+msgstr "账号"
+
+msgid "Xray is not running"
+msgstr "Xray未运行"
+
+msgid "Xray is running"
+msgstr "Xray正在运行"

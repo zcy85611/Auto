@@ -1,0 +1,1 @@
+/mnt/sda1/download *(rw,all_squash,insecure,sync,no_subtree_check)

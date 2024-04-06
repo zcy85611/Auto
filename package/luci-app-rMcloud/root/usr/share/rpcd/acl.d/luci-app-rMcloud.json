@@ -1,0 +1,11 @@
+{
+	"luci-app-rMcloud": {
+		"description": "Grant UCI access for luci-app-rMcloud",
+		"read": {
+			"uci": [ "rMcloud" ]
+		},
+		"write": {
+			"uci": [ "rMcloud" ]
+		}
+	}
+}

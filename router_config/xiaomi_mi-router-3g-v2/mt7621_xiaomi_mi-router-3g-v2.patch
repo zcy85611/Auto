@@ -1,0 +1,48 @@
+diff --git a/target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-common.dtsi b/target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-common.dtsi
+index efc3273..1b576ea 100644
+--- a/target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-common.dtsi
++++ b/target/linux/ramips/dts/mt7621_xiaomi_mi-router-4a-common.dtsi
+@@ -66,28 +66,10 @@
+ 				read-only;
+ 			};
+ 
+-			partition@60000 {
+-				label = "crash";
+-				reg = <0x60000 0x10000>;
+-				read-only;
+-			};
+-
+-			partition@70000 {
+-				label = "cfg_bak";
+-				reg = <0x70000 0x10000>;
+-				read-only;
+-			};
+-
+-			partition@80000 {
+-				label = "overlay";
+-				reg = <0x80000 0x100000>;
+-				read-only;
+-			};
+-
+-			firmware: partition@180000 {
++			firmware: partition@60000 {
+ 				compatible = "denx,uimage";
+ 				label = "firmware";
+-				reg = <0x180000 0xe80000>;
++				reg = <0x60000 0x1FA0000>;
+ 			};
+ 		};
+ 	};
+diff --git a/target/linux/ramips/image/mt7621.mk b/target/linux/ramips/image/mt7621.mk
+index 9838810..5de2b91 100644
+--- a/target/linux/ramips/image/mt7621.mk
++++ b/target/linux/ramips/image/mt7621.mk
+@@ -2655,7 +2655,7 @@ TARGET_DEVICES += xiaomi_mi-router-3g
+ define Device/xiaomi_mi-router-3g-v2
+   $(Device/dsa-migration)
+   $(Device/uimage-lzma-loader)
+-  IMAGE_SIZE := 14848k
++  IMAGE_SIZE := 32448k
+   DEVICE_VENDOR := Xiaomi
+   DEVICE_MODEL := Mi Router 3G
+   DEVICE_VARIANT := v2

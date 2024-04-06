@@ -1,0 +1,4 @@
+#!/bin/sh
+read -p "Please input your username:" name
+read -p "Please input your password:" pass
+echo "$name:$(openssl passwd $pass)" >/etc/nginx/webdavpasswd

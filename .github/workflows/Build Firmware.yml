@@ -1,0 +1,304 @@
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+
+name: Build Openwrt Firmware
+
+on:
+  workflow_dispatch:
+    inputs:
+      arch:
+        description: 'choose arch'
+        required: true
+        type: choice
+        options:
+        - 'mediatek'
+        - 'ramips'
+        - 'ath79'
+        
+      cpu:
+        description: 'choose cpu'
+        required: true
+        type: choice
+        options:
+        - 'filogic'
+        - 'mt7621'
+        - 'mt7620'
+        - 'generic'
+        
+      device:
+        description: 'choose device'
+        required: true
+        type: choice
+        options:
+        - 'cmcc_rax3000m'
+        - 'zte_e8820s'
+        - 'zte_e8820s-32m'
+        - 'raisecom_msg1500-x-00'
+        - 'xiaomi_redmi-router-ac2100'
+        - 'xiaomi_mi-router-3g-v2'		
+        - 'gehua_ghl-r-001'
+        - 'lenovo_newifi-d1'
+        - 'd-team_newifi-d2'
+        - 'hiwifi_hc5962'
+      wan:
+        description: 'protocol(dhcp,pppoe), pppoeusername, pppoepassword, dns1, dns2'
+        required: true
+        type: string
+        default: 'dhcp,user,pass,223.5.5.5,114.114.114.114'
+        
+      lan:
+        description: 'switch,deafult lan ip'
+        required: true
+        type: string
+        default: '0,192.168.77.1'
+
+      wififrq:
+        description: 'wifi frequency 2g(HT20,HT40 HE20 HE40), 5g(VHT40 VHT80 VHT160 HE80 HE160)'
+        required: true
+        type: choice
+        options:
+        - 'HE20,HE80'
+        - 'HE40,HE80'
+        - 'HE40,HE160'
+        - 'HT20,VHT80'
+        - 'HT40,VHT80'
+        - 'HT40,VHT160'
+
+      wifi:
+        description: 'wifi ssid,password'
+        required: true
+        type: string
+        default: 'skygunner5,123456aA'
+        
+      softwares:
+        description: 'rMcloud,xray,acme,alist,uugame,ttyd,dawn,oaf,msd_lite,omcproxy,udpxy,xupnpd,samba,wireguard'
+        type: string
+        default: 'rMcloud,xray,acme,alist,uugame,ttyd'
+
+env:
+  REPO_URL: https://github.com/openwrt/openwrt
+  REPO_BRANCH: master
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: false
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+              
+    - name: Setup Node.js environment          
+      uses: actions/setup-node@v4.0.1
+
+    - name: Checkout
+      uses: actions/checkout@main
+   
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git \
+                                    libncurses5-dev libssl-dev python3-distutils rsync unzip file wget zlib1g-dev \
+                                    libpcre3-dev libfuse-dev 
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+  
+    - name: Clone source code & updates feeds
+      run: |
+        git clone --depth=1 $REPO_URL -b $REPO_BRANCH openwrt
+        cd openwrt 
+        ./scripts/feeds update -a && ./scripts/feeds install -a
+
+    - name: ENV setup
+      run: |
+        IFS=',' read -r lanswitch lanip <<< "${{ inputs.lan }}"
+        echo "lanswitch=$lanswitch" >> $GITHUB_ENV
+        echo "lanip=$lanip" >> $GITHUB_ENV    
+        IFS=',' read -r wanprot wanuser wanpass wandns1 wandns2<<< "${{ inputs.wan }}"
+        echo "wanprot=$wanprot" >> $GITHUB_ENV
+        echo "wanuser=$wanuser" >> $GITHUB_ENV
+        echo "wanpass=$wanpass" >> $GITHUB_ENV
+        echo "wandns1=$wandns1" >> $GITHUB_ENV
+        echo "wandns2=$wandns2" >> $GITHUB_ENV
+        IFS=',' read -r wifissid wifipass <<< "${{ inputs.wifi }}"
+        echo "wifissid=$wifissid" >> $GITHUB_ENV
+        echo "wifipass=$wifipass" >> $GITHUB_ENV
+        IFS=',' read -r wififrq2g wififrq5g <<< "${{ inputs.wififrq }}"
+        echo "wififrq2g=$wififrq2g" >> $GITHUB_ENV
+        echo "wififrq5g=$wififrq5g" >> $GITHUB_ENV
+
+    - name: Generate .config
+      run: |
+        echo CONFIG_TARGET_${{ inputs.arch }}=y >> config
+        echo CONFIG_TARGET_${{ inputs.arch }}_${{ inputs.cpu }}=y >> config
+        echo CONFIG_TARGET_${{ inputs.arch }}_${{ inputs.cpu }}_DEVICE_${{ inputs.device }}=y >> config
+        echo CONFIG_TARGET_ROOTFS_PARTSIZE=2048 >> config
+        IFS=","
+        if [ -n ${{ inputs.softwares }} ]; then
+          for i in {${{ inputs.softwares }}}
+          do
+          sed -i "/$i/s/^# //" config
+          done
+        fi
+        cat config
+        
+    - name: Generate uci-default
+      run: |
+        cat > files/etc/uci-defaults/init_network << EOF
+        #!/bin/sh
+        
+        # Wireless setup
+        uci set wireless.radio0.channel='6'
+        uci set wireless.radio0.htmode='${{ env.wififrq2g }}'
+        uci set wireless.radio0.country='AU'
+        uci set wireless.radio0.noscan='1'
+        uci set wireless.radio1.channel='36'
+        uci set wireless.radio1.htmode='${{ env.wififrq5g }}'
+        uci set wireless.radio1.country='AU'
+        uci set wireless.default_radio0.ssid='${{ env.wifissid }}_2.4G'
+        uci set wireless.default_radio0.encryption='psk-mixed+ccmp'
+        uci set wireless.default_radio0.key='${{ env.wifipass }}'
+        uci set wireless.default_radio1.ssid='${{ env.wifissid }}_5G'
+        uci set wireless.default_radio1.encryption='psk-mixed+ccmp'
+        uci set wireless.default_radio1.key='${{ env.wifipass }}'
+        uci set wireless.default_radio1.ieee80211k='1'
+        uci set wireless.default_radio1.time_advertisement='2'
+        uci set wireless.default_radio1.time_zone='CST-8'
+        uci set wireless.default_radio1.wnm_sleep_mode='1'
+        uci set wireless.default_radio1.wnm_sleep_mode_no_keys='1'
+        uci set wireless.default_radio1.bss_transition='1'
+        
+        # Network setup
+        uci set dhcp.lan.ignore='${{ env.lanswitch }}'
+        uci set network.wan.proto='${{ env.wanprot }}'
+        uci set network.wan.username='${{ env.wanuser }}'
+        uci set network.wan.password='${{ env.wanpass }}'
+        uci set network.wan.peerdns='0'
+        uci add_list network.wan.dns='${{ env.wandns1 }}'
+        uci add_list network.wan.dns='${{ env.wandns2 }}'
+        
+        # System setup
+        uci set system.@system[-1].zonename='Asia/Shanghai'
+        uci set system.@system[-1].timezone='CST-8'
+        uci set system.@system[-1].hostname='${{ inputs.device }}'
+        uci commit
+        /etc/init.d/network restart
+        /etc/init.d/system restart
+        exit 0
+        EOF
+
+    - name: Organize files before compilation
+      run: |
+        cp -rf config openwrt/.config
+        cp -rf files openwrt
+        cp -rf tools openwrt
+        cp -rf package openwrt/package/leozhao
+        cp -rf package/aria2/patches openwrt/package/feeds/packages/aria2
+        cp -rf package/*.patch openwrt/feeds/packages
+        cp -rf package/luci-app-nfs/nfsd.init openwrt/feeds/packages/net/nfs-kernel-server/files/nfsd.init
+        if [ -e router_config/${{ inputs.device }} ];then
+          cd router_config/${{ inputs.device }}
+        fi
+        if [ -e *${{ inputs.device }}*.dts ];then
+          cp -rf *${{ inputs.device }}*.dts $GITHUB_WORKSPACE/openwrt/target/linux/ramips/dts
+        fi
+        if [ $(find . -maxdepth 1 -type f -name '*.patch' | wc -l) -gt 0 ]; then
+          cp -rf *.patch $GITHUB_WORKSPACE/openwrt 
+        fi
+
+    - name: Apply DIY Scripts
+      run: |
+        cd openwrt
+        # Third party package
+        git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
+        
+        # Modify extra files
+        sed -i 's/LocalHost/${{ env.lanip }}/g' files/etc/dnsmasq.d/local.conf
+        curl https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/hosts_AD > files/etc/hosts_AD
+        echo "	list bt_tracker '$(curl https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt)'" >> files/etc/config/aria2
+        
+        # Modify default files
+        sed -i 's/192.168.1.1/${{ env.lanip }}/g' package/base-files/files/bin/config_generate
+        sed -i 's/disabled=1/disabled=0/g' package/network/config/wifi-scripts/files/lib/wifi/mac80211.sh
+        echo 'fs.file-max=2097152' >> package/base-files/files/etc/sysctl.d/10-default.conf
+        sed -i '38itools-y += ucl upx' tools/Makefile
+        sed -i '39i$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+        sed -i 's/LocalHost/${{ env.lanip }}/g' package/leozhao/rMcloud/rMcloud.conf
+        
+        # Download China IP list
+        curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
+        echo "define ip_cn = {" > package/leozhao/xray/ip_cn
+        awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cn
+        sed -i '$a}' package/leozhao/xray/ip_cn 
+        rm package/leozhao/xray/tmp_cnip
+        
+        # Modify packages
+        curl --create-dirs -o package/leozhao/xray/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
+        sed -i "26 i list addnmount '/etc/dnsmasq.d'" package/network/services/dnsmasq/files/dhcp.conf
+        sed -i "26 i list addnhosts '/etc/hosts_AD'" package/network/services/dnsmasq/files/dhcp.conf
+        sed -i 's/rebind_protection 1/rebind_protection 0/g' package/network/services/dnsmasq/files/dhcp.conf
+        sed -i 's/filter_aaaa	0/filter_aaaa	1/g' package/network/services/dnsmasq/files/dhcp.conf
+        sed -i 's/lto/no-lto/g' feeds/packages/net/nginx/Makefile
+        echo 'conf-dir=/etc/dnsmasq.d' >> package/network/services/dnsmasq/files/dnsmasq.conf
+        rm -rf feeds/luci/applications/luci-app-alist
+        rm -rf feeds/packages/net/alist
+   
+    - name: Apply patches
+      run: |
+        cd openwrt
+        if [ $(find . -maxdepth 1 -type f -name '*.patch' | wc -l) -gt 0 ]; then
+          find . -maxdepth 1 -type f -name "*.patch" -print | awk '{print "patch -p1 < "$0; system("patch -p1 < "$0);}'
+        fi
+        cd feeds/packages
+        if [ $(find . -maxdepth 1 -type f -name '*.patch' | wc -l) -gt 0 ]; then
+          find . -maxdepth 1 -type f -name "*.patch" -print | awk '{print "patch -p1 < "$0; system("patch -p1 < "$0);}'
+        fi
+
+    - name: Download Package
+      run: |
+        cd openwrt
+        make defconfig && cat .config
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+              
+    - name: Compilation
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
+        echo "status=success" >> $GITHUB_OUTPUT
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin${{ inputs.device }}${{ env.FILE_DATE }}
+        path: openwrt/bin
+ 
+    - name: Organize files in bin
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt/bin/targets/*/*
+        ls -alh
+        rm -rf packages
+        rm -rf $(ls|grep -v *.bin|grep -v *.itb) *initramfs*.bin
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
+        
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware_${{ inputs.device }}${{ env.FILE_DATE }}
+        path: ${{ env.FIRMWARE }}

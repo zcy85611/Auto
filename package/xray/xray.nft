@@ -1,0 +1,63 @@
+#!/usr/sbin/nft -f
+
+flush table xray
+
+include "/etc/xray/ip_cn"
+include "/etc/xray/ip_reserve"
+
+table xray {
+	set china {
+		typeof ip daddr;flags interval;auto-merge;
+		elements = $ip_cn
+	}
+
+	set apple {
+		typeof ip daddr;flags interval;auto-merge;
+	}
+
+	set gfw {
+		typeof ip daddr;flags interval;auto-merge;
+	}
+
+	set force {
+		typeof ip daddr;flags interval;auto-merge;
+	}
+
+	set reserve {
+		typeof ip daddr;flags interval;auto-merge;
+		elements = $ip_reserve
+	}
+
+	set lan {
+		typeof ip daddr;flags interval;auto-merge;
+	}
+
+	chain prerouting {
+		type filter hook prerouting priority filter; policy accept;
+		meta mark 0xff return
+		ip daddr @lan return
+		ip daddr @reserve return
+		ip daddr @apple return
+		ip daddr @china return
+		ip daddr @force ip protocol { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 accept
+		ip daddr @gfw ip protocol { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 accept
+		ip protocol { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 accept
+	}
+	
+	chain output {
+		type route hook output priority filter; policy accept;
+		meta mark 0xff return
+		ip daddr @lan return
+		ip daddr @reserve return
+		ip daddr @apple return
+		ip daddr @china return
+		ip daddr @force ip protocol { tcp, udp } meta mark set 1 accept
+		ip daddr @gfw ip protocol { tcp, udp }  meta mark set 1 accept
+		ip protocol { tcp, udp } meta mark set 1 accept
+	}
+
+	chain divert {
+		type filter hook prerouting priority mangle; policy accept;
+		meta l4proto tcp socket transparent 1 meta mark set 1 accept
+	}
+}

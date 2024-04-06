@@ -1,0 +1,56 @@
+msgid "Shared Directories"
+msgstr "本机已共享的目录"
+
+msgid "Path"
+msgstr "路径"
+
+msgid "Clients"
+msgstr "允许的客户端"
+
+msgid "Async"
+msgstr "异步写入"
+
+msgid "Enable"
+msgstr "启用"
+
+msgid "Subtree Check"
+msgstr "检查父目录权限"
+
+msgid "Read-only"
+msgstr "只读"
+
+msgid "Permission"
+msgstr "访问权限"
+
+msgid "Insecure"
+msgstr "禁用安全性"
+
+msgid "Allow external network access"
+msgstr "允许外部网络访问"
+
+msgid "Mounted Points"
+msgstr "已挂载到本地的NFS"
+
+msgid "Mount On"
+msgstr "挂载到"
+
+msgid "Host"
+msgstr "主机"
+
+msgid "NFS is running"
+msgstr "NFS正在运行"
+
+msgid "NFS is not running"
+msgstr "NFS未运行"
+
+msgid "Map all visiting users to anonymous"
+msgstr "所有访问用户都映射为匿名用户"
+
+msgid "Match with local users first, if fails, map to anonymous"
+msgstr "访问用户先与本机用户匹配，匹配失败后再映射为匿名用户"
+
+msgid "Map visiting ROOT users to anonymous"
+msgstr "将来访的root用户映射为匿名用户"
+
+msgid "Keep ROOT user's permission"
+msgstr "来访的root用户保持root帐号权限"

@@ -1,0 +1,41 @@
+msgid "Enable"
+msgstr "启用"
+
+msgid "Data Path"
+msgstr "数据存放路径"
+
+msgid "Handwriting Recognition"
+msgstr "手写识别设置"
+
+msgid "Email Settings"
+msgstr "邮件设置"
+
+msgid "Port"
+msgstr "端口"
+
+msgid "Log Level"
+msgstr "日志等级"
+
+msgid "Basic Settings"
+msgstr "基础设置"
+
+msgid "SMTP User"
+msgstr "邮件服务器用户名"
+
+msgid "SMTP Password"
+msgstr "邮件服务器密码"
+
+msgid "SMTP Server"
+msgstr "邮件服务器地址"
+
+msgid "Server address in HOST:PORT format"
+msgstr "邮件服务器地址格式 - 地址:端口号"
+
+msgid "Developed by 幸运7"
+msgstr "由 淘宝店 幸运7 独家开发"
+
+msgid "rMcloud is not running"
+msgstr "rMcloud未运行"
+
+msgid "rMcloud is running"
+msgstr "rMcloud正在运行"

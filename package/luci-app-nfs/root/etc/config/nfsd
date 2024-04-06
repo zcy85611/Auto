@@ -1,0 +1,14 @@
+
+config basic
+	option enabled '0'
+
+config share
+	option enabled '1'
+	option clients '*'
+	option permission 'all_squash'
+	option method '1'
+	option subtreecheck '0'
+	option read_only '0'
+	option insecure '1'
+	option path '/mnt/sda1'
+

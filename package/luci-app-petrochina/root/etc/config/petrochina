@@ -1,0 +1,10 @@
+
+config global
+	option port '8080'
+	option proxyaddr 'proxy3.bj.petrochina'
+	option enabled '0'
+
+config exception
+	option excIP '"11.0.0.0/8","10.0.0.0/8","192.168.0.0/16"'
+	option excDomain '"petrochina",".cnpc"'
+	option excPort '121,122,123'

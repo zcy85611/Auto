@@ -1,0 +1,33 @@
+diff --git a/target/linux/ramips/image/mt7621.mk b/target/linux/ramips/image/mt7621.mk
+index 2c25b1a..57db047 100644
+--- a/target/linux/ramips/image/mt7621.mk
++++ b/target/linux/ramips/image/mt7621.mk
+@@ -3043,6 +3043,16 @@ define Device/zio_freezio
+ endef
+ TARGET_DEVICES += zio_freezio
+ 
++define Device/zte_e8820s-32m
++  $(Device/dsa-migration)
++  $(Device/uimage-lzma-loader)
++  IMAGE_SIZE := 32448k
++  DEVICE_VENDOR := ZTE
++  DEVICE_MODEL := E8820S-32M
++  DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 kmod-usb3 uboot-envtools
++endef
++TARGET_DEVICES += zte_e8820s-32m
++
+ define Device/zyxel_lte3301-plus
+   $(Device/nand)
+   DEVICE_VENDOR := ZyXEL
+diff --git a/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh b/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh
+index 40a2fb6..2bc7c62 100755
+--- a/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh
++++ b/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh
+@@ -119,6 +119,7 @@ platform_do_upgrade() {
+ 	xiaomi,mi-router-cr6608|\
+ 	xiaomi,mi-router-cr6609|\
+ 	xiaomi,redmi-router-ac2100|\
++	zte,e8820s-32m|\
+ 	zyxel,nwa50ax|\
+ 	zyxel,nwa55axe)
+ 		nand_do_upgrade "$1"

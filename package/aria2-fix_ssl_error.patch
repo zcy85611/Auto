@@ -1,0 +1,48 @@
+From b8032af30ffc0ab29efae1ea878f30a694343120 Mon Sep 17 00:00:00 2001
+From: Ariel Xiong <ArielHeleneto@outlook.com>
+Date: Fri, 22 Dec 2023 23:30:07 +0800
+Subject: [PATCH] aria2: fix OSSL_PROVIDER_load 'legacy' failed
+ (aria2/aria2#2152)
+
+fix "Exception: [Platform.cc:125] errorCode=1 OSSL_PROVIDER_load 'legacy' failed." Bug
+
+Signed-off-by: Ariel Xiong <ArielHeleneto@outlook.com>
+---
+ net/aria2/Makefile         | 4 ++--
+ net/aria2/files/aria2.init | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/net/aria2/Makefile b/net/aria2/Makefile
+index 6aee1cc9c44dd..8be120097c630 100644
+--- a/net/aria2/Makefile
++++ b/net/aria2/Makefile
+@@ -8,7 +8,7 @@ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=aria2
+ PKG_VERSION:=1.37.0
+-PKG_RELEASE:=1
++PKG_RELEASE:=2
+ 
+ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+ PKG_SOURCE_URL:=https://github.com/aria2/aria2/releases/download/release-$(PKG_VERSION)/
+@@ -53,7 +53,7 @@ define Package/aria2
+   SUBMENU:=File Transfer
+   TITLE:=lightweight download utility
+   URL:=https://aria2.github.io/
+-  DEPENDS:=+zlib +libstdcpp +ARIA2_OPENSSL:libopenssl +ARIA2_GNUTLS:libgnutls \
++  DEPENDS:=+zlib +libstdcpp +ARIA2_OPENSSL:libopenssl +ARIA2_OPENSSL:libopenssl-legacy +ARIA2_GNUTLS:libgnutls \
+ 	+ARIA2_NETTLE:libnettle +ARIA2_LIBGCRYPT:libgcrypt +ARIA2_GMP:libgmp \
+ 	+ARIA2_LIBXML2:libxml2 +ARIA2_EXPAT:libexpat +ARIA2_SFTP:libssh2 \
+ 	+ARIA2_ASYNC_DNS:libcares +ARIA2_COOKIE:libsqlite3
+diff --git a/net/aria2/files/aria2.init b/net/aria2/files/aria2.init
+index deef3077fa240..54034a4d2cd2a 100755
+--- a/net/aria2/files/aria2.init
++++ b/net/aria2/files/aria2.init
+@@ -341,6 +341,7 @@ aria2_start() {
+ 		procd_set_param user "$user"
+ 
+ 	procd_add_jail "$NAME.$section" log
++	procd_add_jail_mount "/usr/lib"
+ 	procd_add_jail_mount "$ca_certificate" "$certificate" "$rpc_certificate" "$rpc_private_key"
+ 	procd_add_jail_mount_rw "$dir" "$config_dir" "$log"
+ 	procd_close_instance

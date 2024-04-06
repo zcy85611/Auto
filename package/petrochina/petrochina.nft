@@ -1,0 +1,23 @@
+#!/usr/sbin/nft -f
+
+flush table xray
+
+table xray {
+
+	set lan {
+		typeof ip daddr;flags interval;auto-merge;
+	}
+
+	chain prerouting {
+		type filter hook prerouting priority mangle; policy accept;
+		ip daddr @lan return
+		ip protocol tcp tproxy to 127.0.0.1:12345 meta mark set 1
+	}
+	
+	chain output {
+		type route hook output priority mangle; policy accept;
+		ip daddr @lan return
+		meta mark 0xff return
+		ip protocol tcp meta mark set 1
+	}
+}

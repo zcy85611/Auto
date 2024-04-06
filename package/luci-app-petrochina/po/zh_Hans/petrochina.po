@@ -1,0 +1,21 @@
+msgid "Enable"
+msgstr "启用"
+
+msgid "Proxy Address"
+msgstr "代理服务器地址"
+
+msgid "Port"
+msgstr "端口"
+
+msgid "Developed by 幸运7"
+msgstr "由 淘宝店 幸运7 独家开发"
+
+msgid "Petrochina Proxy is not running"
+msgstr "Petrochina代理服务器未运行"
+
+msgid "Petrochina Proxy is running"
+msgstr "Petrochina代理服务器正在运行"
+
+msgid "Exception List"
+msgstr "排除清单"
+

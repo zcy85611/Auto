@@ -1,0 +1,11 @@
+{
+	"luci-app-petrochina": {
+		"description": "Grant UCI access for luci-app-petrochina",
+		"read": {
+			"uci": [ "petrochina" ]
+		},
+		"write": {
+			"uci": [ "petrochina" ]
+		}
+	}
+}

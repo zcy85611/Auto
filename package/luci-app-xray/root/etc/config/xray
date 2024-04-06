@@ -1,0 +1,7 @@
+
+config basic
+	option enabled '0'
+	option loglevel 'none'
+	option serverAddr 'a.asdfqwer8888.top'
+	option port '443'
+	option uuid ''

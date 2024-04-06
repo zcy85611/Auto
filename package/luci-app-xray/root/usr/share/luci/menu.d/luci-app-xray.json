@@ -1,0 +1,13 @@
+{
+	"admin/services/xray": {
+		"title": "Xray",
+		"order": 80,
+		"action": {
+			"type": "view",
+			"path": "xray"
+		},
+		"depends": {
+			"acl": [ "luci-app-xray" ]
+		}
+	}
+}

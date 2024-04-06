@@ -1,0 +1,13 @@
+{
+	"admin/services/petrochina": {
+		"title": "Petrochina Proxy",
+		"order": 1,
+		"action": {
+			"type": "view",
+			"path": "petrochina"
+		},
+		"depends": {
+			"acl": [ "luci-app-petrochina" ]
+		}
+	}
+}

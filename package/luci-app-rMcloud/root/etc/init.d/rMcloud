@@ -1,0 +1,73 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2020-2022 Leo Zhao <skygunner5@hotmail.com>
+# Licensed to the public under the Apache License 2.0.
+
+START=99
+USE_PROCD=1
+PROG=/usr/bin/rMcloud
+
+get_basic() {
+	config_get_bool enabled $1 enabled '0'
+	config_get port $1 port
+	config_get loglevel $1 loglevel '1'
+	config_get datadir $1 datadir "/mnt/sda1"
+	case $loglevel in
+		0)
+			rMlog='info'
+			;;
+		1)
+			rMlog='error'
+			;;
+		2)
+			rMlog='warn'
+			;;
+		3)
+			rMlog='debug'
+			;;
+	esac
+}
+
+get_email() {
+	config_get smtpuser $1 smtpuser ''
+	config_get smtppasswd $1 smtppasswd ''
+	config_get smtpserver $1 smtpserver ''
+}
+
+get_hwr() {
+	config_get applicationkey $1 applicationkey ''
+	config_get hmac $1 hmac ''
+}
+
+start_service() {
+	config_load rMcloud
+	config_foreach get_basic basic
+	config_foreach get_email email
+	config_foreach get_hwr hwr
+	[ $enabled != 1 ] && return 1
+	procd_open_instance rMcloud
+	procd_set_param command "$PROG"
+	procd_set_param env JWT_SECRET_KEY=aljj/5ApXgHdrqnF1bOhzPQnTtyGWOMZFSvQRgx8smhGY6Q4S30fVWbpARSxECjM \
+						PORT=$port \
+						DATADIR=$datadir \
+						LOGLEVEL=$rMlog \
+						RMAPI_HWR_APPLICATIONKEY=$applicationkey \
+						RMAPI_HWR_HMAC=$hmac \
+						RM_SMTP_SERVER=$smtpserver \
+						RM_SMTP_USERNAME=$smtpuser \
+						RM_SMTP_PASSWORD=$smtppasswd \
+						RM_SMTP_FROM="reMarkable <$smtpuser>"
+	procd_set_param stdout 1
+	procd_set_param stderr 1
+	procd_set_param pidfile /var/run/rMcloud
+	procd_close_instance
+}
+
+reload_service()
+{
+	stop
+	start
+}
+
+service_triggers() {
+	procd_add_reload_trigger "rMcloud"
+}

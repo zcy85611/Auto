@@ -1,0 +1,12 @@
+
+config basic
+	option datadir '/mnt/sda1/cloud'
+	option enabled '0'
+	option storageurl 'https://local.appspot.com'
+	option port '3000'
+	option loglevel '0'
+
+config email
+
+config hwr
+
