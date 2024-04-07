@@ -1,7 +1,7 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 
-name: Build Openwrt Firmware
+name: Build Firmware
 
 on:
   workflow_dispatch:
