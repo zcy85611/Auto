@@ -31,6 +31,7 @@ on:
         type: choice
         options:
         - 'cmcc_rax3000m'
+        - 'cmcc_rax3000z-xr30'
         - 'zte_e8820s'
         - 'zte_e8820s-32m'
         - 'raisecom_msg1500-x-00'
@@ -40,6 +41,7 @@ on:
         - 'lenovo_newifi-d1'
         - 'd-team_newifi-d2'
         - 'hiwifi_hc5962'
+        
       wan:
         description: 'protocol(dhcp,pppoe), pppoeusername, pppoepassword, dns1, dns2'
         required: true
@@ -133,12 +135,17 @@ jobs:
         IFS=',' read -r wififrq2g wififrq5g <<< "${{ inputs.wififrq }}"
         echo "wififrq2g=$wififrq2g" >> $GITHUB_ENV
         echo "wififrq5g=$wififrq5g" >> $GITHUB_ENV
+        if [ ${{ inputs.device }} == "cmcc_rax3000z-xr30" ];then
+            echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
+        else
+            echo "devicename=${{ inputs.device }}"  >> $GITHUB_ENV
+        fi
 
     - name: Generate .config
       run: |
         echo CONFIG_TARGET_${{ inputs.arch }}=y >> config
         echo CONFIG_TARGET_${{ inputs.arch }}_${{ inputs.cpu }}=y >> config
-        echo CONFIG_TARGET_${{ inputs.arch }}_${{ inputs.cpu }}_DEVICE_${{ inputs.device }}=y >> config
+        echo CONFIG_TARGET_${{ inputs.arch }}_${{ inputs.cpu }}_DEVICE_${{ env.devicename }}=y >> config
         echo CONFIG_TARGET_ROOTFS_PARTSIZE=2048 >> config
         IFS=","
         if [ -n ${{ inputs.softwares }} ]; then

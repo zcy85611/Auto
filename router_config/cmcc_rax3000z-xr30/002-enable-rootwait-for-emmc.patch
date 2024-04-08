@@ -1,0 +1,69 @@
+From d9d77d145a78c3b8a87f94768357a41066e9d1a9 Mon Sep 17 00:00:00 2001
+From: Tianling Shen <cnsztl@immortalwrt.org>
+Date: Fri, 5 Apr 2024 15:44:24 +0800
+Subject: [PATCH] mediatek: enable rootwait for cmcc rax3000m emmc version
+
+Sometimes the mmc deivce may come up later than kernel attempts to
+mount rootfs, resulting kernel panic. Enable rootwait to fix it.
+
+Reported-by: Yangyu Chen <cyy@cyyself.name>
+Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
+---
+ .../uboot-mediatek/patches/437-add-cmcc_rax3000m.patch   | 2 +-
+ .../linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso   | 9 ++++++++-
+ target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts      | 2 +-
+ 3 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
+index 26e0e30a996628..1d636b64a74e0e 100644
+--- a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
++++ b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
+@@ -585,7 +585,7 @@
+ +serverip=192.168.1.254
+ +loadaddr=0x46000000
+ +console=earlycon=uart8250,mmio32,0x11002000 console=ttyS0
+-+bootargs=root=/dev/mmcblk0p65
+++bootargs=root=/dev/mmcblk0p65 rootwait
+ +bootcmd=if pstore check ; then run boot_recovery ; else run boot_emmc ; fi
+ +bootconf=config-1#mt7981b-cmcc-rax3000m-emmc
+ +bootdelay=0
+diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
+index c1c9c75c271ae3..df0a79eb1ee73a 100644
+--- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
++++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
+@@ -7,6 +7,13 @@
+ 	compatible = "cmcc,rax3000m", "mediatek,mt7981";
+ 
+ 	fragment@0 {
++		target = <&chosen>;
++		__overlay_ {
++			bootargs-append = " rootwait";
++		};
++	};
++
++	fragment@1 {
+ 		target = <&mmc0>;
+ 		__overlay__ {
+ 			bus-width = <8>;
+@@ -22,7 +29,7 @@
+ 		};
+ 	};
+ 
+-	fragment@1 {
++	fragment@2 {
+ 		target = <&pio>;
+ 		__overlay__ {
+ 			mmc0_pins_default: mmc0-pins {
+diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
+index 3f330f40fae43e..bb0d43c1120b28 100644
+--- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
++++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
+@@ -21,7 +21,7 @@
+ 		serial0 = &uart0;
+ 	};
+ 
+-	chosen {
++	chosen: chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 

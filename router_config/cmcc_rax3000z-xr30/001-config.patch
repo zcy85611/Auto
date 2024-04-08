@@ -1,0 +1,52 @@
+diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
+index c1c9c75..5583269 100644
+--- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
++++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
+@@ -10,7 +10,7 @@
+ 		target = <&mmc0>;
+ 		__overlay__ {
+ 			bus-width = <8>;
+-			max-frequency = <26000000>;
++			max-frequency = <52000000>;
+ 			no-sd;
+ 			no-sdio;
+ 			non-removable;
+diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
+index c8db5b5..2f662be 100644
+--- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
++++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
+@@ -17,8 +17,8 @@
+ 	aliases {
+ 		led-boot = &red_led;
+ 		led-failsafe = &red_led;
+-		led-running = &green_led;
+-		led-upgrade = &green_led;
++		led-running = &white_led;
++		led-upgrade = &white_led;
+ 		serial0 = &uart0;
+ 	};
+ 
+@@ -50,19 +50,13 @@
+ 	gpio-leds {
+ 		compatible = "gpio-leds";
+ 
+-		green_led: led-0 {
++		white_led: led-0 {
+ 			function = LED_FUNCTION_STATUS;
+-			color = <LED_COLOR_ID_GREEN>;
+-			gpios = <&pio 9 GPIO_ACTIVE_LOW>;
++			color = <LED_COLOR_ID_WHITE>;
++			gpios = <&pio 34 GPIO_ACTIVE_LOW>;
+ 		};
+ 
+-		led-1 {
+-			function = LED_FUNCTION_STATUS;
+-			color = <LED_COLOR_ID_BLUE>;
+-			gpios = <&pio 12 GPIO_ACTIVE_LOW>;
+-		};
+-
+-		red_led: led-2 {
++		red_led: led-1 {
+ 			function = LED_FUNCTION_STATUS;
+ 			color = <LED_COLOR_ID_RED>;
+ 			gpios = <&pio 35 GPIO_ACTIVE_LOW>;
