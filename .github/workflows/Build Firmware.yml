@@ -75,7 +75,7 @@ on:
       softwares:
         description: 'rMcloud,xray,acme,alist,uugame,ttyd,dawn,oaf,msd_lite,omcproxy,udpxy,xupnpd,samba,wireguard'
         type: string
-        default: 'rMcloud,xray,acme,alist,uugame,ttyd'
+        default: 'rMcloud,xray,acme,alist,uugame,ttyd,oaf'
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
@@ -252,7 +252,7 @@ jobs:
         sed -i "26 i list addnhosts '/etc/hosts_AD'" package/network/services/dnsmasq/files/dhcp.conf
         sed -i 's/rebind_protection 1/rebind_protection 0/g' package/network/services/dnsmasq/files/dhcp.conf
         sed -i 's/filter_aaaa	0/filter_aaaa	1/g' package/network/services/dnsmasq/files/dhcp.conf
-        sed -i 's/lto/no-lto/g' feeds/packages/net/nginx/Makefile
+        # sed -i 's/lto/no-lto/g' feeds/packages/net/nginx/Makefile
         echo 'conf-dir=/etc/dnsmasq.d' >> package/network/services/dnsmasq/files/dnsmasq.conf
         rm -rf feeds/luci/applications/luci-app-alist
         rm -rf feeds/packages/net/alist
