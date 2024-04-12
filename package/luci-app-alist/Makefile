@@ -1,14 +1,17 @@
-# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2016 Openwrt.org
 #
-# Copyright (C) 2023 ImmortalWrt.org
+# This is free software, licensed under the Apache License, Version 2.0 .
+#
 
 include $(TOPDIR)/rules.mk
 
-PKG_LICENSE:=Apache-2.0
+PKG_NAME:=luci-app-alist
+PKG_VERSION:=1.0.13
+PKG_RELEASE:=1
 
-LUCI_TITLE:=LuCI app for AList
+LUCI_TITLE:=LuCI support for alist
 LUCI_DEPENDS:=+alist
 
-include ../../luci.mk
+include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
