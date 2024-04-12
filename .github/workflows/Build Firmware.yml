@@ -254,8 +254,8 @@ jobs:
         sed -i 's/filter_aaaa	0/filter_aaaa	1/g' package/network/services/dnsmasq/files/dhcp.conf
         # sed -i 's/lto/no-lto/g' feeds/packages/net/nginx/Makefile
         echo 'conf-dir=/etc/dnsmasq.d' >> package/network/services/dnsmasq/files/dnsmasq.conf
-        rm -rf feeds/luci/applications/luci-app-alist
-        rm -rf feeds/packages/net/alist
+        # rm -rf feeds/luci/applications/luci-app-alist
+        # rm -rf feeds/packages/net/alist
    
     - name: Apply patches
       run: |
