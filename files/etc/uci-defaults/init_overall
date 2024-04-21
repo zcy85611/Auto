@@ -8,11 +8,11 @@ echo "public:$(openssl passwd 123456)" >/etc/nginx/webdavpasswd
 echo "0 0 * * 0 /etc/scripts/updateAD" >> /etc/crontabs/root
 uci set nginx.global.uci_enable='false'
 uci commit
-echo "load_module /usr/lib/nginx/modules/ngx_http_dav_ext_module.so;" >> /etc/nginx/module.d/luci.module
-echo "load_module /usr/lib/nginx/modules/ngx_http_headers_more_filter_module.so;" >> /etc/nginx/module.d/luci.module
+# echo "load_module /usr/lib/nginx/modules/ngx_http_dav_ext_module.so;" >> /etc/nginx/module.d/luci.module
+# echo "load_module /usr/lib/nginx/modules/ngx_http_headers_more_filter_module.so;" >> /etc/nginx/module.d/luci.module
 /etc/init.d/nginx reload
-[ -e /etc/init.d/omcproxy ] && /etc/init.d/omcproxy disable
-[ -e /etc/init.d/xupnpd ] && /etc/init.d/xupnpd disable
-[ -e /etc/init.d/samba4 ] && /etc/init.d/samba4 disable
-[ -e /etc/init.d/wsdd2 ] && /etc/init.d/wsdd2 disable
+# [ -e /etc/init.d/omcproxy ] && /etc/init.d/omcproxy disable
+# [ -e /etc/init.d/xupnpd ] && /etc/init.d/xupnpd disable
+# [ -e /etc/init.d/samba4 ] && /etc/init.d/samba4 disable
+# [ -e /etc/init.d/wsdd2 ] && /etc/init.d/wsdd2 disable
 exit 0
