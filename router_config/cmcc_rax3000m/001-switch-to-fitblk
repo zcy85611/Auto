@@ -12,7 +12,7 @@ Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
-index 4d2b01cb63e90..3f401b53d342f 100644
+index 4d2b01cb63e90e..3f401b53d342f6 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 @@ -79,7 +79,7 @@
@@ -65,7 +65,7 @@ Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
  6 files changed, 47 insertions(+), 37 deletions(-)
 
 diff --git a/package/boot/uboot-envtools/files/mediatek_filogic b/package/boot/uboot-envtools/files/mediatek_filogic
-index 7d46e73dbe166..67ad3ef7e2c44 100644
+index 7d46e73dbe166a..67ad3ef7e2c446 100644
 --- a/package/boot/uboot-envtools/files/mediatek_filogic
 +++ b/package/boot/uboot-envtools/files/mediatek_filogic
 @@ -39,6 +39,7 @@ asus,rt-ax59u)
@@ -94,7 +94,7 @@ index 7d46e73dbe166..67ad3ef7e2c44 100644
  	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x20000" "0x80000"
  	;;
 diff --git a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
-index 26e0e30a99662..103fbf6161a32 100644
+index 26e0e30a996628..103fbf6161a325 100644
 --- a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
 +++ b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
 @@ -585,7 +585,7 @@
@@ -107,7 +107,7 @@ index 26e0e30a99662..103fbf6161a32 100644
  +bootconf=config-1#mt7981b-cmcc-rax3000m-emmc
  +bootdelay=0
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
-index c1c9c75c271ae..4dfcf95390458 100644
+index c1c9c75c271ae3..4dfcf953904584 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
 @@ -7,6 +7,13 @@
@@ -151,7 +151,7 @@ index c1c9c75c271ae..4dfcf95390458 100644
  		__overlay__ {
  			mmc0_pins_default: mmc0-pins {
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
-index 3f401b53d342f..fded878332e24 100644
+index 3f401b53d342f6..fded878332e243 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 @@ -7,6 +7,13 @@
@@ -220,7 +220,7 @@ index 3f401b53d342f..fded878332e24 100644
  		__overlay__ {
  			nvmem-cells = <&eeprom_factory_0>;
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
-index c8db5b58f5432..977a61333363c 100644
+index c8db5b58f54329..977a61333363c2 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
 @@ -22,7 +22,8 @@
@@ -234,7 +234,7 @@ index c8db5b58f5432..977a61333363c 100644
  	};
  
 diff --git a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
-index ee0e8b62d752d..9c02c05ab98ec 100755
+index ee0e8b62d752db..9c02c05ab98ecf 100755
 --- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 +++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 @@ -83,6 +83,7 @@ platform_do_upgrade() {
