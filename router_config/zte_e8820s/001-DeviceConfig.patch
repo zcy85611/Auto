@@ -1,10 +1,10 @@
 diff --git a/target/linux/ramips/image/mt7621.mk b/target/linux/ramips/image/mt7621.mk
-index 9838810..d6044bd 100644
+index 10e7857..14f49a6 100644
 --- a/target/linux/ramips/image/mt7621.mk
 +++ b/target/linux/ramips/image/mt7621.mk
-@@ -2959,6 +2959,24 @@ define Device/zio_freezio
+@@ -3161,6 +3161,24 @@ define Device/zyxel_wap6805
  endef
- TARGET_DEVICES += zio_freezio
+ TARGET_DEVICES += zyxel_wap6805
  
 +define Device/zte_e8820s
 +  $(Device/dsa-migration)
@@ -24,18 +24,18 @@ index 9838810..d6044bd 100644
 +endef
 +TARGET_DEVICES += zte_e8820s
 +
- define Device/zyxel_lte3301-plus
+ define Device/zyxel_wsm20
    $(Device/nand)
-   DEVICE_VENDOR := ZyXEL
+   KERNEL_SIZE := 8192k
 diff --git a/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh b/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh
-index 2038723..75e5eeb 100755
+index 93fbc47..e2c91f4 100755
 --- a/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh
 +++ b/target/linux/ramips/mt7621/base-files/lib/upgrade/platform.sh
-@@ -117,6 +117,7 @@ platform_do_upgrade() {
+@@ -125,6 +125,7 @@ platform_do_upgrade() {
  	xiaomi,mi-router-cr6608|\
  	xiaomi,mi-router-cr6609|\
  	xiaomi,redmi-router-ac2100|\
 +	zte,e8820s|\
+ 	z-router,zr-2660|\
  	zyxel,nwa50ax|\
  	zyxel,nwa55axe)
- 		nand_do_upgrade "$1"
