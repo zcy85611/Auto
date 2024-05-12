@@ -247,7 +247,7 @@ index ff791a6..38974e9 100755
  	bananapi,bpi-r3-mini|\
  	bananapi,bpi-r4|\
 -	bananapi,bpi-r4-poe)
-+	bananapi,bpi-r4-poe\
++	bananapi,bpi-r4-poe|\
 +	cmcc,rax3000m)
  		case "$(fitblk_get_bootdev)" in
  		mmcblk*)
