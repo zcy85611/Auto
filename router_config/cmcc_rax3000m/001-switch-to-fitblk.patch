@@ -1,4 +1,4 @@
-From 17aa3226af5c4b4eb850d423f63c486d3d2d59d7 Mon Sep 17 00:00:00 2001
+From 421748245f02c311751b84ad6faee520bbb59ba5 Mon Sep 17 00:00:00 2001
 From: Tianling Shen <cnsztl@immortalwrt.org>
 Date: Tue, 2 Apr 2024 20:26:45 +0800
 Subject: [PATCH 1/2] mediatek: convert eeprom to nvmem format for cmcc
@@ -12,7 +12,7 @@ Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
-index 4d2b01cb63e90e..3f401b53d342f6 100644
+index 4d2b01cb63e90..3f401b53d342f 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 @@ -79,7 +79,7 @@
@@ -46,7 +46,7 @@ index 4d2b01cb63e90e..3f401b53d342f6 100644
  	};
  };
 
-From e850771b188eb008e040f63bc37ec1df4a2029b4 Mon Sep 17 00:00:00 2001
+From beca71b03d3684c0c5fde4fb8bd99cc1cab4c968 Mon Sep 17 00:00:00 2001
 From: Tianling Shen <cnsztl@immortalwrt.org>
 Date: Tue, 2 Apr 2024 20:26:45 +0800
 Subject: [PATCH 2/2] mediatek: switch to fitblk for cmcc rax3000m
@@ -61,11 +61,14 @@ Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
  .../dts/mt7981b-cmcc-rax3000m-emmc.dtso       | 23 ++++++++++++++++++-
  .../dts/mt7981b-cmcc-rax3000m-nand.dtso       | 22 ++++++++++++++----
  .../mediatek/dts/mt7981b-cmcc-rax3000m.dts    |  3 ++-
+ .../filogic/base-files/etc/board.d/02_network |  5 ++--
+ .../etc/hotplug.d/firmware/11-mt76-caldata    |  5 ++--
+ .../etc/hotplug.d/ieee80211/11_fix_wifi_mac   |  5 ++--
  .../base-files/lib/upgrade/platform.sh        | 23 +++----------------
- 6 files changed, 47 insertions(+), 37 deletions(-)
+ 9 files changed, 56 insertions(+), 43 deletions(-)
 
 diff --git a/package/boot/uboot-envtools/files/mediatek_filogic b/package/boot/uboot-envtools/files/mediatek_filogic
-index c439af12c88b81..6f8ec4dfa1e89d 100644
+index c439af12c88b8..6f8ec4dfa1e89 100644
 --- a/package/boot/uboot-envtools/files/mediatek_filogic
 +++ b/package/boot/uboot-envtools/files/mediatek_filogic
 @@ -40,6 +40,7 @@ bananapi,bpi-r3|\
@@ -94,7 +97,7 @@ index c439af12c88b81..6f8ec4dfa1e89d 100644
  	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x20000" "0x80000"
  	;;
 diff --git a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
-index 26e0e30a996628..103fbf6161a325 100644
+index 26e0e30a99662..103fbf6161a32 100644
 --- a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
 +++ b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
 @@ -585,7 +585,7 @@
@@ -107,7 +110,7 @@ index 26e0e30a996628..103fbf6161a325 100644
  +bootconf=config-1#mt7981b-cmcc-rax3000m-emmc
  +bootdelay=0
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
-index c1c9c75c271ae3..4dfcf953904584 100644
+index c1c9c75c271ae..4dfcf95390458 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-emmc.dtso
 @@ -7,6 +7,13 @@
@@ -151,7 +154,7 @@ index c1c9c75c271ae3..4dfcf953904584 100644
  		__overlay__ {
  			mmc0_pins_default: mmc0-pins {
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
-index 3f401b53d342f6..fded878332e243 100644
+index 3f401b53d342f..fded878332e24 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 @@ -7,6 +7,13 @@
@@ -220,7 +223,7 @@ index 3f401b53d342f6..fded878332e243 100644
  		__overlay__ {
  			nvmem-cells = <&eeprom_factory_0>;
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
-index c8db5b58f54329..977a61333363c2 100644
+index c8db5b58f5432..977a61333363c 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
 +++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
 @@ -22,7 +22,8 @@
@@ -233,8 +236,77 @@ index c8db5b58f54329..977a61333363c2 100644
  		stdout-path = "serial0:115200n8";
  	};
  
+diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
+index 4de3cf044d145..58fc7e7755ed8 100644
+--- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
++++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
+@@ -2,6 +2,7 @@
+ . /lib/functions.sh
+ . /lib/functions/uci-defaults.sh
+ . /lib/functions/system.sh
++. /lib/upgrade/common.sh
+ 
+ mediatek_setup_interfaces()
+ {
+@@ -128,8 +129,8 @@ mediatek_setup_macs()
+ 		wan_mac=$(macaddr_add $(cat /sys/class/net/eth0/address) 1)
+ 		;;
+ 	cmcc,rax3000m)
+-		case "$(cmdline_get_var root)" in
+-		/dev/mmc*)
++		case "$(fitblk_get_bootdev)" in
++		mmcblk*)
+ 			wan_mac=$(mmc_get_mac_binary factory 0x2a)
+ 			lan_mac=$(mmc_get_mac_binary factory 0x24)
+ 			label_mac=$wan_mac
+diff --git a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
+index bd68ef7415692..5f2949c93d268 100644
+--- a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
++++ b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
+@@ -3,6 +3,7 @@
+ [ -e /lib/firmware/$FIRMWARE ] && exit 0
+ 
+ . /lib/functions/caldata.sh
++. /lib/upgrade/common.sh
+ 
+ board=$(board_name)
+ 
+@@ -25,8 +26,8 @@ case "$FIRMWARE" in
+ "mediatek/mt7981_eeprom_mt7976_dbdc.bin")
+ 	case "$board" in
+ 	cmcc,rax3000m)
+-		case "$(cmdline_get_var root)" in
+-		/dev/mmc*)
++		case "$(fitblk_get_bootdev)" in
++		mmcblk*)
+ 			caldata_extract_mmc "factory" 0x0 0x1000
+ 			;;
+ 		esac
+diff --git a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
+index e0e1e1f1fc24f..e88467a28e45d 100644
+--- a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
++++ b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
+@@ -6,6 +6,7 @@ PHYNBR=${DEVPATH##*/phy}
+ 
+ . /lib/functions.sh
+ . /lib/functions/system.sh
++. /lib/upgrade/common.sh
+ 
+ board=$(board_name)
+ 
+@@ -55,8 +56,8 @@ case "$board" in
+ 		[ "$PHYNBR" = "1" ] && macaddr_setbit_la $(macaddr_add $addr 2) > /sys${DEVPATH}/macaddress
+ 		;;
+ 	cmcc,rax3000m)
+-		case "$(cmdline_get_var root)" in
+-		/dev/mmc*)
++		case "$(fitblk_get_bootdev)" in
++		mmcblk*)
+ 			addr=$(mmc_get_mac_binary factory 0xa)
+ 			;;
+ 		*)
 diff --git a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
-index ff791a600a3442..5eb9c85b77d67a 100755
+index ff791a600a344..5eb9c85b77d67 100755
 --- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 +++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 @@ -84,6 +84,7 @@ platform_do_upgrade() {
