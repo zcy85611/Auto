@@ -284,9 +284,8 @@ index ff791a6..38974e9 100755
  		case "$(fitblk_get_bootdev)" in
  		mmcblk*)
  			emmc_copy_config
-
 diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-index 648ecb9289..8f5da0271a 100644
+index 648ecb9..8f5da02 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 @@ -2,6 +2,7 @@
@@ -294,7 +293,7 @@ index 648ecb9289..8f5da0271a 100644
  . /lib/functions/uci-defaults.sh
  . /lib/functions/system.sh
 +. /lib/upgrade/common.sh
-
+ 
  mediatek_setup_interfaces()
  {
 @@ -127,8 +128,8 @@ mediatek_setup_macs()
@@ -332,17 +331,17 @@ index bd68ef7415..5f2949c93d 100644
  			;;
  		esac
 diff --git a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
-index 75c3d25ed9..9c06d52a03 100644
+index 75c3d25..9c06d52 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
 +++ b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
 @@ -6,6 +6,7 @@ PHYNBR=${DEVPATH##*/phy}
-
+ 
  . /lib/functions.sh
  . /lib/functions/system.sh
 +. /lib/upgrade/common.sh
-
+ 
  board=$(board_name)
-
+ 
 @@ -55,8 +56,8 @@ case "$board" in
  		[ "$PHYNBR" = "1" ] && macaddr_setbit_la $(macaddr_add $addr 2) > /sys${DEVPATH}/macaddress
  		;;
