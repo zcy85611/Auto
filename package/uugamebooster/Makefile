@@ -12,7 +12,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=uugamebooster
-PKG_VERSION:=v3.13.4
+PKG_VERSION:=v4.14.4
 PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -31,22 +31,22 @@ endef
 
 ifeq ($(ARCH),arm)
 	UU_ARCH:=arm
-	PKG_MD5SUM:=d9687105b1cce30f2d2cc971251ae0a2
+	PKG_MD5SUM:=9d524db2593abd58a2977ff844e8db65
 endif
 
 ifeq ($(ARCH),aarch64)
 	UU_ARCH:=aarch64
-	PKG_MD5SUM:=7b5b49364da31459fb4293a312021ab3
+	PKG_MD5SUM:=3ce3e920432e59825bc84113fbbf2a8e
 endif
 
 ifeq ($(ARCH),mipsel)
 	UU_ARCH:=mipsel
-	PKG_MD5SUM:=6aca5ecec753c199fe80bcc176fe6212
+	PKG_MD5SUM:=d65b3295d5770e4a15ff9e8a4b83bc2a
 endif
 
 ifeq ($(ARCH),x86_64)
 	UU_ARCH:=x86_64
-	PKG_MD5SUM:=857fa8cd2a7e9dba03db88f834cac40e
+	PKG_MD5SUM:=b9ca050a6ed3658b460150b02f7772e6
 endif
 
 PKG_SOURCE_URL:=https://uu.gdl.netease.com/uuplugin/openwrt-$(UU_ARCH)/$(PKG_VERSION)/uu.tar.gz?
@@ -72,9 +72,9 @@ define Package/uugamebooster/install
 	# $(INSTALL_DIR) $(1)/etc/init.d
 	# $(INSTALL_BIN) ./files/uugamebooster.init $(1)/etc/init.d/uuplugin
 
-	$(INSTALL_DIR) $(1)/usr/bin/uugamebooster
-	$(INSTALL_BIN) $(UNTAR_DIR)/uuplugin $(1)/usr/bin/uugamebooster/uuplugin
-	$(INSTALL_CONF) $(UNTAR_DIR)/uu.conf $(1)/usr/bin/uugamebooster/uu.conf
+	$(INSTALL_DIR) $(1)/usr/share/uugamebooster
+	$(INSTALL_BIN) $(UNTAR_DIR)/uuplugin $(1)/usr/share/uugamebooster/uuplugin
+	$(INSTALL_CONF) $(UNTAR_DIR)/uu.conf $(1)/usr/share/uugamebooster/uu.conf
 
 	# not finish yet:
 	# $(INSTALL_DIR) $(1)/usr/bin
