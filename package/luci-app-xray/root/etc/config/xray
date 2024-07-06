@@ -2,6 +2,6 @@
 config basic
 	option enabled '0'
 	option loglevel 'none'
-	option serverAddr 'a.asdfqwer8888.top'
+	option serverAddr 'us.a2b9s.vip'
 	option port '443'
 	option uuid ''
