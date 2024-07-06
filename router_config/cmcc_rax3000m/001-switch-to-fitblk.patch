@@ -1,4 +1,4 @@
-From 85498d98fd7ec29877a087255c1f1ae0540ba6e7 Mon Sep 17 00:00:00 2001
+From a1826eb1f1f5f9e1eec2e3cd5cea6d2c80448cfa Mon Sep 17 00:00:00 2001
 From: Tianling Shen <cnsztl@immortalwrt.org>
 Date: Tue, 2 Apr 2024 20:26:45 +0800
 Subject: [PATCH 1/2] mediatek: convert eeprom/macaddr to nvmem format for cmcc
@@ -142,10 +142,10 @@ index 4d2b01cb63e90..3f401b53d342f 100644
  	};
  };
 diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-index 70b076dc9fd3d..8c8231c56e521 100644
+index 1a210810bcdda..c9c8a87f54b88 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-@@ -131,15 +131,6 @@ mediatek_setup_macs()
+@@ -134,15 +134,6 @@ mediatek_setup_macs()
  	bananapi,bpi-r4)
  		wan_mac=$(macaddr_add $(cat /sys/class/net/eth0/address) 1)
  		;;
@@ -162,7 +162,7 @@ index 70b076dc9fd3d..8c8231c56e521 100644
  		wan_mac=$(mtd_get_mac_ascii pdt_data_1 ethaddr)
  		lan_mac=$(macaddr_add "$wan_mac" 1)
 diff --git a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
-index e0d1d93207ccb..b9bceaa0c3ca9 100644
+index 920a16d05dd0f..c6900e6ebd751 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
 +++ b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
 @@ -24,13 +24,6 @@ case "$FIRMWARE" in
@@ -176,11 +176,11 @@ index e0d1d93207ccb..b9bceaa0c3ca9 100644
 -			;;
 -		esac
 -		;;
- 	openwrt,one)
- 		caldata_extract "factory" 0x0 0x1000
+ 	ubnt,unifi-6-plus)
+ 		caldata_extract_mmc "factory" 0x0 0x1000
  		;;
 diff --git a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
-index 334d221e21d97..17e33490999a5 100644
+index 942facee87c06..98b1023e3ee8c 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
 +++ b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
 @@ -55,15 +55,8 @@ case "$board" in
@@ -202,7 +202,7 @@ index 334d221e21d97..17e33490999a5 100644
  	comfast,cf-e393ax)
  		addr=$(mtd_get_mac_binary "Factory" 0x8000)
 
-From a249c23ba5270567f77fe19eb888f76af7ed26fd Mon Sep 17 00:00:00 2001
+From f2b8907255279845754a24144ada8c3758f52f74 Mon Sep 17 00:00:00 2001
 From: Tianling Shen <cnsztl@immortalwrt.org>
 Date: Tue, 2 Apr 2024 20:26:45 +0800
 Subject: [PATCH 2/2] mediatek: switch to fitblk for cmcc rax3000m
@@ -221,7 +221,7 @@ Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
  6 files changed, 40 insertions(+), 40 deletions(-)
 
 diff --git a/package/boot/uboot-envtools/files/mediatek_filogic b/package/boot/uboot-envtools/files/mediatek_filogic
-index c93fa2499b398..9b1cc97f85b34 100644
+index 0e30c489c9723..eb0b1650e11af 100644
 --- a/package/boot/uboot-envtools/files/mediatek_filogic
 +++ b/package/boot/uboot-envtools/files/mediatek_filogic
 @@ -40,6 +40,7 @@ bananapi,bpi-r3|\
@@ -410,7 +410,7 @@ index c8db5b58f5432..977a61333363c 100644
  	};
  
 diff --git a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
-index 7e105b10897da..8e06789a08326 100755
+index 800e6bc5dea0d..03ebeca8d5b1c 100755
 --- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 +++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 @@ -86,6 +86,7 @@ platform_do_upgrade() {
@@ -440,7 +440,7 @@ index 7e105b10897da..8e06789a08326 100755
  	cudy,re3000-v1|\
  	cudy,wr3000-v1|\
  	yuncore,ax835)
-@@ -226,17 +215,11 @@ platform_check_image() {
+@@ -227,17 +216,11 @@ platform_check_image() {
  
  platform_copy_config() {
  	case "$(board_name)" in
