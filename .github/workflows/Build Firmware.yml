@@ -228,7 +228,7 @@ jobs:
         
         # Modify extra files
         sed -i 's/LocalHost/${{ env.lanip }}/g' files/etc/dnsmasq.d/local.conf
-        curl https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/hosts_AD > files/etc/hosts_AD
+        # curl https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/hosts_AD > files/etc/hosts_AD
         echo "	list bt_tracker '$(curl https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt)'" >> files/etc/config/aria2
         
         # Modify default files
@@ -249,7 +249,7 @@ jobs:
         # Modify packages
         curl --create-dirs -o package/leozhao/xray/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
         sed -i "26 i list addnmount '/etc/dnsmasq.d'" package/network/services/dnsmasq/files/dhcp.conf
-        sed -i "26 i list addnhosts '/etc/hosts_AD'" package/network/services/dnsmasq/files/dhcp.conf
+        # sed -i "26 i list addnhosts '/etc/hosts_AD'" package/network/services/dnsmasq/files/dhcp.conf
         sed -i 's/rebind_protection 1/rebind_protection 0/g' package/network/services/dnsmasq/files/dhcp.conf
         sed -i 's/filter_aaaa	0/filter_aaaa	1/g' package/network/services/dnsmasq/files/dhcp.conf
         # sed -i 's/lto/no-lto/g' feeds/packages/net/nginx/Makefile
