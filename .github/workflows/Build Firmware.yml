@@ -138,6 +138,7 @@ jobs:
         echo "wififrq5g=$wififrq5g" >> $GITHUB_ENV
         if [ ${{ inputs.device }} == "cmcc_rax3000z-xr30" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
+        fi
         if [ ${{ inputs.device }} == "cmcc_rax3000me" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
         else
