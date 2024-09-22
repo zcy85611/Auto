@@ -31,6 +31,7 @@ on:
         type: choice
         options:
         - 'cmcc_rax3000m'
+        - 'cmcc_rax3000me'
         - 'cmcc_rax3000z-xr30'
         - 'zte_e8820s'
         - 'zte_e8820s-32m'
@@ -136,6 +137,8 @@ jobs:
         echo "wififrq2g=$wififrq2g" >> $GITHUB_ENV
         echo "wififrq5g=$wififrq5g" >> $GITHUB_ENV
         if [ ${{ inputs.device }} == "cmcc_rax3000z-xr30" ];then
+            echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
+        if [ ${{ inputs.device }} == "cmcc_rax3000me" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
         else
             echo "devicename=${{ inputs.device }}"  >> $GITHUB_ENV

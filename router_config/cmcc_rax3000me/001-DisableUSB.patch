@@ -1,0 +1,23 @@
+diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
+index 977a613..f5ed538 100644
+--- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
++++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m.dts
+@@ -144,10 +144,6 @@
+ 	status = "okay";
+ };
+ 
+-&usb_phy {
+-	status = "okay";
+-};
+-
+ &watchdog {
+ 	status = "okay";
+ };
+@@ -155,7 +151,3 @@
+ &wifi {
+ 	status = "okay";
+ };
+-
+-&xhci {
+-	status = "okay";
+-};
