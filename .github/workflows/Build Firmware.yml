@@ -62,6 +62,7 @@ on:
         options:
         - 'HE20,HE80'
         - 'HE40,HE80'
+        - 'HE20,HE160'
         - 'HE40,HE160'
         - 'HT20,VHT80'
         - 'HT40,VHT80'
@@ -74,9 +75,9 @@ on:
         default: 'skygunner5,123456aA'
         
       softwares:
-        description: 'rMcloud,xray,acme,alist,uugame,ttyd,dawn,oaf,msd_lite,omcproxy,udpxy,xupnpd,samba,wireguard'
+        description: 'rMcloud,xray,acme,alist,ttyd,dawn,oaf,msd_lite,omcproxy,udpxy,xupnpd,samba,wireguard,uugame'
         type: string
-        default: 'rMcloud,xray,acme,alist,uugame,ttyd,oaf'
+        default: 'rMcloud,xray,acme,alist,ttyd,oaf'
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
@@ -95,7 +96,7 @@ jobs:
     steps:
               
     - name: Setup Node.js environment          
-      uses: actions/setup-node@v4.0.1
+      uses: actions/setup-node@v4.0.4
 
     - name: Checkout
       uses: actions/checkout@main
