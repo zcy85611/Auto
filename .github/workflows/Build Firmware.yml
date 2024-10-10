@@ -185,6 +185,8 @@ jobs:
         uci set wireless.default_radio1.wnm_sleep_mode='1'
         uci set wireless.default_radio1.wnm_sleep_mode_no_keys='1'
         uci set wireless.default_radio1.bss_transition='1'
+        uci set wireless.radio0.disabled='0'
+        uci set wireless.radio1.disabled='0'
         
         # Network setup
         uci set dhcp.lan.ignore='${{ env.lanswitch }}'
@@ -237,7 +239,6 @@ jobs:
         
         # Modify default files
         sed -i 's/192.168.1.1/${{ env.lanip }}/g' package/base-files/files/bin/config_generate
-        sed -i "s/disabled='1'/disabled='0'/g" package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
         echo 'fs.file-max=2097152' >> package/base-files/files/etc/sysctl.d/10-default.conf
         sed -i '38itools-y += ucl upx' tools/Makefile
         sed -i '39i$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
