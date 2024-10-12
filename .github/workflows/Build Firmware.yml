@@ -33,6 +33,7 @@ on:
         - 'cmcc_rax3000m'
         - 'cmcc_rax3000me'
         - 'cmcc_xr30'
+        - 'abt_asr3000'
         - 'zte_e8820s'
         - 'zte_e8820s-32m'
         - 'raisecom_msg1500-x-00'
