@@ -32,7 +32,8 @@ on:
         options:
         - 'cmcc_rax3000m'
         - 'cmcc_rax3000me'
-        - 'cmcc_xr30'
+        - 'cmcc_xr30_nand'
+        - 'cmcc_xr30_emmc'
         - 'abt_asr3000'
         - 'zte_e8820s'
         - 'zte_e8820s-32m'
@@ -138,7 +139,9 @@ jobs:
         IFS=',' read -r wififrq2g wififrq5g <<< "${{ inputs.wififrq }}"
         echo "wififrq2g=$wififrq2g" >> $GITHUB_ENV
         echo "wififrq5g=$wififrq5g" >> $GITHUB_ENV
-        if [ ${{ inputs.device }} == "cmcc_xr30" ];then
+        if [ ${{ inputs.device }} == "cmcc_xr30_emmc" ];then
+            echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
+        elif [ ${{ inputs.device }} == "cmcc_xr30_nand" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
         elif [ ${{ inputs.device }} == "cmcc_rax3000me" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
