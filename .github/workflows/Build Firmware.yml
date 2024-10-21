@@ -166,6 +166,7 @@ jobs:
         
     - name: Generate uci-default
       run: |
+        mkdir -p files/etc/uci-defaults
         cat > files/etc/uci-defaults/initialization << EOF
         
         #!/bin/sh
