@@ -212,8 +212,8 @@ jobs:
         uci set firewall.@defaults[0].flow_offloading='1'
         uci set firewall.@defaults[0].flow_offloading_hw='1'
 
-        # dhcp script setup for IPTV
-        sed -i $'s/${vendorid:+-V "$vendorid"}/${vendorid:+-V \'\' "-x 0x3c:$vendorid"}/g' /lib/netifd/proto/dhcp.sh
+        # dhcp setup for IPTV
+        # sed -i $'s/${vendorid:+-V "$vendorid"}/${vendorid:+-V \'\' "-x 0x3c:$vendorid"}/g' /lib/netifd/proto/dhcp.sh
         
         # Self-made script setup
         chmod +x -R /etc/scripts/*
@@ -224,7 +224,7 @@ jobs:
         
         # Nginx setup
         uci set nginx.global.uci_enable='false'
-        echo "public:$(openssl passwd 123456)" >/etc/nginx/webdavpasswd
+        echo "public:$(openssl passwd 123456aA)" >/etc/nginx/webdavpasswd
 
         # Apply changes
         uci commit
@@ -258,38 +258,37 @@ jobs:
     - name: Apply DIY Scripts
       run: |
         cd openwrt
-        # Third party package
+        # Download Third party package
         git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
         
         # Modify extra files
         sed -i 's/LocalHost/${{ env.lanip }}/g' files/etc/dnsmasq.d/local.conf
-        # curl https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/hosts_AD > files/etc/hosts_AD
+        curl https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/hosts_AD > files/etc/hosts_AD
         echo "	list bt_tracker '$(curl https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt)'" >> files/etc/config/aria2
         
-        # Modify default files
+        # Modify source code
         sed -i 's/192.168.1.1/${{ env.lanip }}/g' package/base-files/files/bin/config_generate
-        echo 'fs.file-max=2097152' >> package/base-files/files/etc/sysctl.d/10-default.conf
         sed -i '38itools-y += ucl upx' tools/Makefile
         sed -i '39i$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
         sed -i 's/LocalHost/${{ env.lanip }}/g' package/leozhao/rMcloud/rMcloud.conf
-        
-        # Download China IP list
-        curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
-        echo "define ip_cn = {" > package/leozhao/xray/ip_cn
-        awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cn
-        sed -i '$a}' package/leozhao/xray/ip_cn 
-        rm package/leozhao/xray/tmp_cnip
-        
-        # Modify packages
-        curl --create-dirs -o package/leozhao/xray/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
+        echo 'fs.file-max=2097152' >> package/base-files/files/etc/sysctl.d/10-default.conf
         sed -i "26 i list addnmount '/etc/dnsmasq.d'" package/network/services/dnsmasq/files/dhcp.conf
         # sed -i "26 i list addnhosts '/etc/hosts_AD'" package/network/services/dnsmasq/files/dhcp.conf
         sed -i 's/rebind_protection 1/rebind_protection 0/g' package/network/services/dnsmasq/files/dhcp.conf
         sed -i 's/filter_aaaa	0/filter_aaaa	1/g' package/network/services/dnsmasq/files/dhcp.conf
         sed -i 's/nonegcache	0/nonegcache	1/g' package/network/services/dnsmasq/files/dhcp.conf
         echo 'conf-dir=/etc/dnsmasq.d' >> package/network/services/dnsmasq/files/dnsmasq.conf
+        sed -i $'s/${vendorid:+-V "$vendorid"}/${vendorid:+-V \'\' "-x 0x3c:$vendorid"}/g' package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
         rm -rf feeds/luci/applications/luci-app-alist
         rm -rf feeds/packages/net/alist
+        
+        # Xray setup
+        curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
+        echo "define ip_cn = {" > package/leozhao/xray/ip_cn
+        awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cn
+        sed -i '$a}' package/leozhao/xray/ip_cn 
+        rm package/leozhao/xray/tmp_cnip
+        curl --create-dirs -o package/leozhao/xray/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
    
     - name: Apply patches
       run: |
