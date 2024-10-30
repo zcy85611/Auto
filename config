@@ -99,6 +99,7 @@ CONFIG_PACKAGE_kmod-fs-nfs-v3=y
 CONFIG_PACKAGE_kmod-fs-exportfs=y
 
 # Others
+# CONFIG_PACKAGE_adb=y
 CONFIG_PACKAGE_bash=y
 CONFIG_PACKAGE_nfs-kernel-server=y
 CONFIG_PACKAGE_nfs-kernel-server-utils=y
