@@ -206,7 +206,6 @@ jobs:
         # System setup
         uci set system.@system[-1].zonename='Asia/Shanghai'
         uci set system.@system[-1].timezone='CST-8'
-        # uci set system.@system[-1].hostname='${{ inputs.device }}'
 
         # Firewall setup
         uci set firewall.@defaults[0].flow_offloading='1'
@@ -259,7 +258,6 @@ jobs:
         git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
         
         # Modify extra files
-        # sed -i 's/LocalHost/${{ env.lanip }}/g' files/etc/dnsmasq.d/local.conf
         curl https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/hosts_AD > files/etc/hosts_AD
         echo "	list bt_tracker '$(curl https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt)'" >> files/etc/config/aria2
         
