@@ -207,22 +207,22 @@ jobs:
         uci set system.@system[-1].zonename='Asia/Shanghai'
         uci set system.@system[-1].timezone='CST-8'
         # uci set system.@system[-1].hostname='${{ inputs.device }}'
-        
+
         # Firewall setup
         uci set firewall.@defaults[0].flow_offloading='1'
         uci set firewall.@defaults[0].flow_offloading_hw='1'
-        
+
         # Self-made script setup
         chmod +x -R /etc/scripts/*
         chmod +x -R /etc/init.d/*
         echo "0 0 * * 0 /etc/scripts/updateAD" >> /etc/crontabs/root
         echo "PATH=$PATH:/etc/scripts" >> /etc/profile
         source /etc/profile
-        
+
         # Nginx setup
         uci set nginx.global.uci_enable='false'
-        echo "public:$(openssl passwd 123456aA)" >/etc/nginx/webdavpasswd
-		
+        echo "admin:$(openssl passwd admin)" >/etc/nginx/webdavpasswd
+
         # Apply changes
         uci commit
         /etc/init.d/network restart
