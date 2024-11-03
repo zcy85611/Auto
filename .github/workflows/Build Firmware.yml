@@ -223,9 +223,8 @@ jobs:
         uci set nginx.global.uci_enable='false'
         echo "public:$(openssl passwd 123456aA)" >/etc/nginx/webdavpasswd
 		
-        uci commit
-
         # Apply changes
+        uci commit
         /etc/init.d/network restart
         /etc/init.d/system restart
         /etc/init.d/firewall restart
