@@ -170,9 +170,7 @@ jobs:
         cat > files/etc/uci-defaults/initialization << EOF
         
         #!/bin/sh
-		
-		[ -e "/etc/dnsmasq.d" ] || mkdir -p /etc/dnsmasq.d
-		
+        [ -e /etc/dnsmasq.d ] || mkdir -p /etc/dnsmasq.d
         # Wifi setup
         uci set wireless.radio0.channel='6'
         uci set wireless.radio0.htmode='${{ env.wififrq2g }}'
