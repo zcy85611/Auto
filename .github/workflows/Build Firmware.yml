@@ -221,15 +221,15 @@ jobs:
         source /etc/profile
 
         # Nginx setup
-        uci set nginx.global.uci_enable='false'
-        echo "admin:$(openssl passwd admin)" >/etc/nginx/webdavpasswd
+        # uci set nginx.global.uci_enable='false'
+        # echo "admin:$(openssl passwd admin)" >/etc/nginx/webdavpasswd
 
         # Apply changes
         uci commit
         /etc/init.d/network restart
         /etc/init.d/system restart
         /etc/init.d/firewall restart
-        /etc/init.d/nginx reload
+        # /etc/init.d/nginx reload
         
         exit 0
         EOF

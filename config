@@ -40,11 +40,14 @@ CONFIG_PACKAGE_iperf3=y
 CONFIG_PACKAGE_openssh-sftp-server=y
 
 # Luci
-CONFIG_PACKAGE_luci-nginx=y
-CONFIG_PACKAGE_nginx-mod-dav-ext=y
-CONFIG_PACKAGE_nginx-mod-headers-more=y
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-light=y
+# CONFIG_PACKAGE_luci-nginx=y
+# CONFIG_PACKAGE_nginx-mod-dav-ext=y
+# CONFIG_PACKAGE_nginx-mod-headers-more=y
 CONFIG_PACKAGE_luci-app-aria2=y
-CONFIG_PACKAGE_ariang-nginx=y
+CONFIG_PACKAGE_ariang=y
+# CONFIG_PACKAGE_ariang-nginx=y
 CONFIG_PACKAGE_luci-app-ddns=y
 CONFIG_PACKAGE_ddns-scripts-cloudflare=y
 CONFIG_PACKAGE_ddns-scripts-huaweicloud=y
