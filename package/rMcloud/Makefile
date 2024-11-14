@@ -34,6 +34,7 @@ define Package/$(PKG_NAME)
   SECTION:=net
   CATEGORY:=Network
   URL:=https://github.com/ddvk/rmfakecloud
+  VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
   DEPENDS:=$(GO_ARCH_DEPENDS)
 endef
 
