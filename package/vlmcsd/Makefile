@@ -2,6 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vlmcsd
 PKG_VERSION:=svn1113
+PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/Wind4/vlmcsd/tar.gz/$(PKG_VERSION)?
@@ -19,6 +20,7 @@ define Package/vlmcsd
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=vlmcsd for OpenWRT
+        VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
 	URL:=http://forums.mydigitallife.info/threads/50234
 	DEPENDS:=+libpthread
 endef
