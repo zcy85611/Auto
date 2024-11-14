@@ -46,6 +46,7 @@ define Package/$(PKG_NAME)
   SUBMENU:=Web Servers/Proxies
   TITLE:=A file list program that supports multiple storage
   URL:=https://alist-doc.nn.ci/
+  VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
   DEPENDS:=$(GO_ARCH_DEPENDS)
 endef
 
