@@ -33,6 +33,7 @@ define Package/xray-LZMA
   SECTION:=net
   CATEGORY:=Network
   URL:=https://github.com/XTLS/Xray-core
+  VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
   DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle
 endef
 
