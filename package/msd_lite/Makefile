@@ -5,6 +5,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=msd_lite
+PKG_VERSION:=20240429
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -22,6 +23,7 @@ define Package/msd_lite
   SECTION:=net
   CATEGORY:=Network
   TITLE:=Program for IP TV streaming on the network via HTTP
+  VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
   URL:=http://www.netlab.linkpc.net/wiki/ru:software:msd:lite
 endef
 
