@@ -77,9 +77,9 @@ on:
         default: 'skygunner5,123456aA'
         
       softwares:
-        description: 'rMcloud,xray,acme,alist,ttyd,dawn,oaf,msd_lite,omcproxy,samba,wireguard,uugame,frpc'
+        description: 'rMcloud,acme,xray,alist,ttyd,msd_lite,omcproxy,dawn,oaf,samba,wireguard,uugame,frpc'
         type: string
-        default: 'rMcloud,xray,acme,alist,ttyd'
+        default: 'rMcloud,acme,xray,alist,ttyd'
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
