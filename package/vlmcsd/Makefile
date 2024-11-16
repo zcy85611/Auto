@@ -20,7 +20,7 @@ define Package/vlmcsd
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=vlmcsd for OpenWRT
-        VERSION:=$(PKG_VERSION)-$(PKG_RELEASE)
+        VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
 	URL:=http://forums.mydigitallife.info/threads/50234
 	DEPENDS:=+libpthread
 endef
