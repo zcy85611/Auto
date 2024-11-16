@@ -1,6 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vlmcsd
+PKG_VERSION:=2023.07.28
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
