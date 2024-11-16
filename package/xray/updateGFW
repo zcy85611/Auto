@@ -1,24 +1,29 @@
 #!/bin/sh
+
 curl --connect-timeout 15 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf' > /tmp/gfwlist.conf
-lines1=$(awk 'END {print NR}' /tmp/gfwlist.conf)
-if [ $lines1 -lt "150" ]; then
-	echo "incomplete download for gfwlist, abort"
-	rm -rf /tmp/gfwlist.conf
+content_length=$(curl -sI 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf' | grep -i Content-Length | awk '{print $2}' | tr -d '\r')
+local_size=$(wc -c < /tmp/gfwlist.conf)
+echo $content_length $local_size
+if [ "$content_length" != "$local_size" ]; then
+    echo "incomplete download, abort"
+    rm -rf /tmp/gfwlist.conf
 else
-	mv -f /tmp/gfwlist.conf /etc/dnsmasq.d
+   mv -f /tmp/gfwlist.conf /etc/dnsmasq.d
 fi
 
-curl --connect-timeout 15 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt' > /tmp/ip_cn
-lines2=$(awk 'END {print NR}' /tmp/ip_cn)
-if [ $lines2 -lt "5000" ]; then
-	echo "incomplete download for china_ips, abort"
-	rm -rf /tmp/ip_cn
+curl --connect-timeout 15 -o /tmp/ip_cn 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
+content_length=$(curl -sI 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt' | grep -i Content-Length | awk '{print $2}' | tr -d '\r')
+local_size=$(wc -c < /tmp/ip_cn)
+echo $content_length $local_size
+if [ "$content_length" != "$local_size" ]; then
+    echo "incomplete download, abort"
+    rm -rf /tmp/ip_cn
 else
 	echo "define ip_cn = {" > /etc/xray/ip_cn
 	awk '{print $0 ","}' /tmp/ip_cn >> /etc/xray/ip_cn
-	sed -i '$a}' /etc/xray/ip_cn 
+	sed -i '$a}' /etc/xray/ip_cn
 	rm -rf /tmp/ip_cn
 fi
 
-nft -f /etc/xray/xray.nft
+/etc/init.d/xray restart
 /etc/init.d/dnsmasq restart
