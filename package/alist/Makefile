@@ -28,7 +28,6 @@ endef
 
 PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
-PKG_USE_MIPS16:=0
 PKG_BUILD_FLAGS:=no-mips16
 
 GO_PKG:=github.com/alist-org/alist
@@ -53,13 +52,9 @@ endef
 define Package/$(PKG_NAME)/description
   A file list program that supports multiple storage, powered by Gin and Solidjs.
 endef
-
-ifeq ($(ARCH),arm)
-  ARM_CPU_FEATURES:=$(word 2,$(subst +,$(space),$(call qstrip,$(CONFIG_CPU_TYPE))))
-  ifeq ($(ARM_CPU_FEATURES),)
-    TARGET_CFLAGS:=
-    TARGET_LDFLAGS:=
-  endif
+	
+ifeq ($(filter aarch64 x86_64, $(ARCH)),)
+  GO_PKG_EXCLUDES:=drivers/lark
 endif
 
 ifneq ($(CONFIG_USE_MUSL),)
@@ -68,9 +63,8 @@ endif
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-	$(eval $(call Download,$(PKG_NAME)-web))
 	$(TAR) --strip-components=1 -C $(PKG_BUILD_DIR)/public/dist -xzf $(DL_DIR)/$(PKG_NAME)-web-$(PKG_WEB_VERSION).tar.gz
-	$(CP) ./files/assets/. $(PKG_BUILD_DIR)/public/dist/assets/
+	$(SED) 's_https://jsd.nn.ci/gh/alist-org/logo@main/logo.png_/assets/logo.png_g' $(PKG_BUILD_DIR)/public/dist/index.html
 endef
 
 define Build/Compile
@@ -85,4 +79,5 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/alist $(1)/usr/bin
 endef
 
+$(eval $(call Download,$(PKG_NAME)-web))
 $(eval $(call BuildPackage,$(PKG_NAME)))
