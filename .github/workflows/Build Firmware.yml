@@ -105,9 +105,6 @@ jobs:
               
     - name: Setup Node.js
       uses: actions/setup-node@v4.1.0
-      with:
-        node-version: '21'
-        cache: 'pnpm'
 
     - name: Checkout
       uses: actions/checkout@main
