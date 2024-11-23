@@ -98,17 +98,17 @@ jobs:
     steps:
 
     - uses: pnpm/action-setup@v4
-	  name: Install pnpm
-	  with:
-	     version: 9
-		 run_install: false
+      name: Install pnpm
+      with:
+        version: 9 
+        run_install: false
               
-    - name: Setup Node.js environment          
+    - name: Setup Node.js
       uses: actions/setup-node@v4.1.0
-	  with:
-	     node-version: 21
-	     cache: 'pnmp'
-
+      with:
+        node-version: '21'
+        cache: 'pnpm'
+	
     - name: Checkout
       uses: actions/checkout@main
    
