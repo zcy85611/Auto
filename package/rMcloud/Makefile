@@ -48,9 +48,8 @@ endif
 
 define Build/Compile
 	$(call GoPackage/Build/Configure)
-	yarn --cwd $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/ui	
-	cp $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/ui/node_modules/pdfjs-dist/build/pdf.worker.js $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/ui/public/
-	yarn --cwd $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/ui build
+	pnpm --prefix $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/ui i
+	pnpm --prefix $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/ui build 
 	$(call GoPackage/Build/Compile)
 	mv -f $(GO_PKG_BUILD_BIN_DIR)/rmfakecloud $(GO_PKG_BUILD_BIN_DIR)/rMcloud
 	$(STAGING_DIR_HOST)/bin/upx --lzma --best $(GO_PKG_BUILD_BIN_DIR)/rMcloud || true

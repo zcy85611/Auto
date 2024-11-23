@@ -96,9 +96,18 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+
+    - uses: pnpm/action-setup@v4
+	  name: Install pnpm
+	  with:
+	     version: 9
+		 run_install: false
               
     - name: Setup Node.js environment          
-      uses: actions/setup-node@v4.0.4
+      uses: actions/setup-node@v4.1.0
+	  with:
+	     node-version: 21
+	     cache: 'pnmp'
 
     - name: Checkout
       uses: actions/checkout@main
