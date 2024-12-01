@@ -68,7 +68,10 @@ CONFIG_PACKAGE_luci-app-nft-qos=y
 # CONFIG_PACKAGE_wireguard-tools=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
 CONFIG_PACKAGE_luci-theme-material=y
+# CONFIG_PACKAGE_luci-app-openvpn=y
+# CONFIG_PACKAGE_openvpn-openssl=y
 # CONFIG_PACKAGE_luci-app-transmission=y
+
 
 # USB
 CONFIG_PACKAGE_kmod-usb-core=y
