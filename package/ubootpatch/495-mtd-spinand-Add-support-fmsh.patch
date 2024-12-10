@@ -6,7 +6,7 @@ index 65b836b3..ace1933d 100644
  # SPDX-License-Identifier: GPL-2.0
  
 -spinand-objs := core.o esmt.o gigadevice.o macronix.o micron.o paragon.o
-+spinand-objs := core.o esmt.o gigadevice.o macronix.o micron.o paragon.o fmsh.o
++spinand-objs := core.o esmt.o etron.o gigadevice.o macronix.o micron.o paragon.o fmsh.o
  spinand-objs += toshiba.o winbond.o xtx.o
  obj-$(CONFIG_MTD_SPI_NAND) += spinand.o
 diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
