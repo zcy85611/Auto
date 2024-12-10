@@ -142,7 +142,7 @@ index 00000000..c7ee9ac7
 +		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xE4),
 +		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
 +		     NAND_ECCREQ(1, 512),
-+		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++		     SPINAND_INFO_OP_VARIANTS(&dummy2_read_cache_variants,
 +					      &write_cache_variants,
 +					      &update_cache_variants),
 +		     0,
