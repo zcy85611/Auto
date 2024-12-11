@@ -22,10 +22,10 @@ index b1df7f627..bc8c7e41e 100644
  static int spinand_manufacturer_match(struct spinand_device *spinand,
 diff --git a/drivers/mtd/nand/spi/fmsh.c b/drivers/mtd/nand/spi/fmsh.c
 new file mode 100644
-index 000000000..ee27b5039
+index 000000000..07a123242
 --- /dev/null
 +++ b/drivers/mtd/nand/spi/fmsh.c
-@@ -0,0 +1,168 @@
+@@ -0,0 +1,155 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (c) 2020-2021 Rockchip Electronics Co., Ltd
@@ -181,7 +181,6 @@ index 000000000..ee27b5039
 +	.nchips = ARRAY_SIZE(fmsh_spinand_table),
 +	.ops = &fmsh_spinand_manuf_ops,
 +};
-+
 diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
 index 702e5fb13..6c27be474 100644
 --- a/include/linux/mtd/spinand.h
