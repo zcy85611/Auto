@@ -248,8 +248,8 @@ jobs:
         cp -rf package openwrt/package/leozhao
         cp -rf package/aria2/patches openwrt/package/feeds/packages/aria2
         cp -rf package/*.patch openwrt/feeds/packages
-        # cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh.patch openwrt/package/boot/uboot-mediatek/patches
-        # cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh-firmware.patch openwrt/target/linux/mediatek/patches-6.6
+        cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh.patch openwrt/package/boot/uboot-mediatek/patches
+        cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh-firmware.patch openwrt/target/linux/mediatek/patches-6.6
         cp -rf package/luci-app-nfs/nfsd.init openwrt/feeds/packages/net/nfs-kernel-server/files/nfsd.init
         if [ -e router_config/${{ inputs.device }} ];then
           cd router_config/${{ inputs.device }}
