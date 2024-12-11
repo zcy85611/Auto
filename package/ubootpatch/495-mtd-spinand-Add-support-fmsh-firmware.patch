@@ -79,7 +79,7 @@ index 000000000..ee27b5039
 +
 +static const struct mtd_ooblayout_ops fm25s01a_ooblayout = {
 +	.ecc = fm25s01a_ooblayout_ecc,
-+	.rfree = fm25s01a_ooblayout_free,
++	.free = fm25s01a_ooblayout_free,
 +};
 +
 +static int fm25s01_ooblayout_ecc(struct mtd_info *mtd, int section,
@@ -108,7 +108,7 @@ index 000000000..ee27b5039
 +
 +static const struct mtd_ooblayout_ops fm25s01_ooblayout = {
 +	.ecc = fm25s01_ooblayout_ecc,
-+	.rfree = fm25s01_ooblayout_free,
++	.free = fm25s01_ooblayout_free,
 +};
 +
 +/*
