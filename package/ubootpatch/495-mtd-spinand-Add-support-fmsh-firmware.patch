@@ -122,19 +122,6 @@ index 000000000..ee27b5039
 + *	not corrected.
 + * others, Reserved.
 + */
-+static int fm25s01bi3_ecc_ecc_get_status(struct spinand_device *spinand,
-+					u8 status)
-+{
-+	struct nand_device *nand = spinand_to_nand(spinand);
-+	u8 eccsr = (status & GENMASK(6, 4)) >> 4;
-+
-+	if (eccsr <= 1 || eccsr == 3)
-+		return eccsr;
-+	else if (eccsr == 5)
-+		return nand->eccreq.strength;
-+	else
-+		return -EBADMSG;
-+}
 +
 +static const struct spinand_info fmsh_spinand_table[] = {
 +	SPINAND_INFO("FM25S01A",
@@ -181,7 +168,7 @@ index 000000000..ee27b5039
 +					      &write_cache_variants,
 +					      &update_cache_variants),
 +		     SPINAND_HAS_QE_BIT,
-+		     SPINAND_ECCINFO(&fm25s01_ooblayout, fm25s01bi3_ecc_ecc_get_status)),
++		     SPINAND_ECCINFO(&fm25s01_ooblayout, NULL)),
 +};
 +
 +static const struct spinand_manufacturer_ops fmsh_spinand_manuf_ops = {
