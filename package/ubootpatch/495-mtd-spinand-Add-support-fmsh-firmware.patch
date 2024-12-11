@@ -181,6 +181,7 @@ index 000000000..ee27b5039
 +	.nchips = ARRAY_SIZE(fmsh_spinand_table),
 +	.ops = &fmsh_spinand_manuf_ops,
 +};
++
 diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
 index 702e5fb13..6c27be474 100644
 --- a/include/linux/mtd/spinand.h
