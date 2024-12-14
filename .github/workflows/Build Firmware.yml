@@ -30,8 +30,9 @@ on:
         required: true
         type: choice
         options:
-        - 'cmcc_rax3000m'
         - 'cmcc_rax3000me'
+        - 'cmcc_rax3000me_usb'
+        - 'cmcc_rax3000m'
         - 'cmcc_xr30_nand'
         - 'cmcc_xr30_emmc'
         - 'abt_asr3000'
