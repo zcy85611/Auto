@@ -151,6 +151,8 @@ jobs:
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
         elif [ ${{ inputs.device }} == "cmcc_rax3000me" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
+        elif [ ${{ inputs.device }} == "cmcc_rax3000me_usb" ];then
+            echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
         else
             echo "devicename=${{ inputs.device }}"  >> $GITHUB_ENV
         fi

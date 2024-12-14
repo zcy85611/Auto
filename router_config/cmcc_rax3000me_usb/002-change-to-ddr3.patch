@@ -1,0 +1,13 @@
+diff --git a/target/linux/mediatek/image/filogic.mk b/target/linux/mediatek/image/filogic.mk
+index 1fdb303..4bb99f9 100644
+--- a/target/linux/mediatek/image/filogic.mk
++++ b/target/linux/mediatek/image/filogic.mk
+@@ -528,7 +528,7 @@ define Device/cmcc_rax3000m
+   ARTIFACT/emmc-gpt.bin := mt798x-gpt emmc
+   ARTIFACT/emmc-preloader.bin := mt7981-bl2 emmc-ddr4
+   ARTIFACT/emmc-bl31-uboot.fip := mt7981-bl31-uboot cmcc_rax3000m-emmc
+-  ARTIFACT/nand-preloader.bin := mt7981-bl2 spim-nand-ddr4
++  ARTIFACT/nand-preloader.bin := mt7981-bl2 spim-nand-ddr3
+   ARTIFACT/nand-bl31-uboot.fip := mt7981-bl31-uboot cmcc_rax3000m-nand
+ endef
+ TARGET_DEVICES += cmcc_rax3000m
