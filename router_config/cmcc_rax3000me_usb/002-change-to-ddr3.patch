@@ -1,3 +1,29 @@
+diff --git a/package/boot/uboot-mediatek/Makefile b/package/boot/uboot-mediatek/Makefile
+index 8fda29a..f853ec8 100644
+--- a/package/boot/uboot-mediatek/Makefile
++++ b/package/boot/uboot-mediatek/Makefile
+@@ -239,8 +239,8 @@ define U-Boot/mt7981_cmcc_rax3000m-emmc
+   UBOOT_IMAGE:=u-boot.fip
+   BL2_BOOTDEV:=emmc
+   BL2_SOC:=mt7981
+-  BL2_DDRTYPE:=ddr4
+-  DEPENDS:=+trusted-firmware-a-mt7981-emmc-ddr4
++  BL2_DDRTYPE:=ddr3
++  DEPENDS:=+trusted-firmware-a-mt7981-emmc-ddr3
+ endef
+ 
+ define U-Boot/mt7981_cmcc_rax3000m-nand
+@@ -251,8 +251,8 @@ define U-Boot/mt7981_cmcc_rax3000m-nand
+   UBOOT_IMAGE:=u-boot.fip
+   BL2_BOOTDEV:=spim-nand
+   BL2_SOC:=mt7981
+-  BL2_DDRTYPE:=ddr4
+-  DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr4
++  BL2_DDRTYPE:=ddr3
++  DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr3
+ endef
+ 
+ define U-Boot/mt7981_glinet_gl-x3000
 diff --git a/target/linux/mediatek/image/filogic.mk b/target/linux/mediatek/image/filogic.mk
 index 1fdb303..5bdaaba 100644
 --- a/target/linux/mediatek/image/filogic.mk
