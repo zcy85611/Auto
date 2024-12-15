@@ -15,18 +15,3 @@ index ddfb757..43a967f 100644
  +					      &write_cache_variants,
  +					      &update_cache_variants),
  +		     SPINAND_HAS_QE_BIT,
-diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
-index fded878..8a6f1ae 100644
---- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
-+++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
-@@ -75,6 +75,10 @@
- 					#address-cells = <1>;
- 					#size-cells = <1>;
- 
-+    			mediatek,nmbm;
-+    			mediatek,bmt-max-ratio = <1>;
-+    			mediatek,bmt-max-reserved-blocks = <64>;
-+
- 					partition@0 {
- 						label = "bl2";
- 						reg = <0x00000 0x0100000>;
