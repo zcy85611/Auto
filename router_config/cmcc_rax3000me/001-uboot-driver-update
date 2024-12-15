@@ -1,5 +1,5 @@
 diff --git a/package/boot/uboot-mediatek/patches/100-22-mtd-spi-nand-backport-from-upstream-kernel.patch b/package/boot/uboot-mediatek/patches/100-22-mtd-spi-nand-backport-from-upstream-kernel.patch
-index ddfb757..43a967f 100644
+index aa03c9b..9dc15e6 100644
 --- a/package/boot/uboot-mediatek/patches/100-22-mtd-spi-nand-backport-from-upstream-kernel.patch
 +++ b/package/boot/uboot-mediatek/patches/100-22-mtd-spi-nand-backport-from-upstream-kernel.patch
 @@ -321,10 +321,10 @@ Signed-off-by: Weijie Gao <weijie.gao@mediatek.com>
