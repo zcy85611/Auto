@@ -1,0 +1,31 @@
+diff --git a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
+index f056cbf..3ee42c0 100644
+--- a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
++++ b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
+@@ -128,8 +128,10 @@
+ +CONFIG_LMB_MAX_REGIONS=64
+ --- /dev/null
+ +++ b/configs/mt7981_cmcc_rax3000m-nand_defconfig
+-@@ -0,0 +1,125 @@
++@@ -0,0 +1,127 @@
+ +CONFIG_ARM=y
+++CONFIG_CMD_NMBM=y
+++CONFIG_ENABLE_NAND_NMBM=y
+ +CONFIG_SYS_HAS_NONCACHED_MEMORY=y
+ +CONFIG_POSITION_INDEPENDENT=y
+ +CONFIG_ARCH_MEDIATEK=y
+diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
+index fded878..8d0331e 100644
+--- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
++++ b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
+@@ -70,6 +70,10 @@
+ 				spi-tx-bus-width = <4>;
+ 				spi-rx-bus-width = <4>;
+ 
++				mediatek,nmbm;
++				mediatek,bmt-max-ratio = <1>;
++				mediatek,bmt-max-reserved-blocks = <64>;
++
+ 				partitions {
+ 					compatible = "fixed-partitions";
+ 					#address-cells = <1>;

@@ -1,15 +1,3 @@
-diff --git a/package/boot/arm-trusted-firmware-mediatek/Makefile b/package/boot/arm-trusted-firmware-mediatek/Makefile
-index c8988fa..7151138 100644
---- a/package/boot/arm-trusted-firmware-mediatek/Makefile
-+++ b/package/boot/arm-trusted-firmware-mediatek/Makefile
-@@ -219,6 +219,7 @@ define Trusted-Firmware-A/mt7981-spim-nand-ddr3
-   BUILD_SUBTARGET:=filogic
-   PLAT:=mt7981
-   DDR_TYPE:=ddr3
-+  USE_UBI:=1
- endef
- 
- define Trusted-Firmware-A/mt7986-ram-ddr4
 diff --git a/package/boot/uboot-mediatek/Makefile b/package/boot/uboot-mediatek/Makefile
 index 8fda29a..f853ec8 100644
 --- a/package/boot/uboot-mediatek/Makefile
