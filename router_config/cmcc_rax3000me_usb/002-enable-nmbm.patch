@@ -1,5 +1,5 @@
 diff --git a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
-index f056cbf..3ee42c0 100644
+index f056cbf..d9fd332 100644
 --- a/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
 +++ b/package/boot/uboot-mediatek/patches/437-add-cmcc_rax3000m.patch
 @@ -128,8 +128,10 @@
@@ -14,6 +14,25 @@ index f056cbf..3ee42c0 100644
  +CONFIG_SYS_HAS_NONCACHED_MEMORY=y
  +CONFIG_POSITION_INDEPENDENT=y
  +CONFIG_ARCH_MEDIATEK=y
+@@ -400,7 +402,7 @@
+ +};
+ --- /dev/null
+ +++ b/arch/arm/dts/mt7981-cmcc-rax3000m-nand.dts
+-@@ -0,0 +1,77 @@
++@@ -0,0 +1,80 @@
+ +// SPDX-License-Identifier: GPL-2.0-only
+ +
+ +/dts-v1/;
+@@ -445,6 +447,9 @@
+ +		compatible = "spi-nand";
+ +		reg = <0>;
+ +		spi-max-frequency = <52000000>;
+++		mediatek,nmbm;
+++		mediatek,bmt-max-ratio = <1>;
+++		mediatek,bmt-max-reserved-blocks = <64>;
+ +
+ +		partitions {
+ +			compatible = "fixed-partitions";
 diff --git a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso b/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
 index fded878..8d0331e 100644
 --- a/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dtso
