@@ -62,7 +62,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN) ./rMcloud_server.conf $(1)/etc/nginx/conf.d
 	$(INSTALL_DIR) $(1)/etc/dnsmasq.d
 	$(INSTALL_DATA) ./rMcloud.conf $(1)/etc/dnsmasq.d
-	$(INSTALL_DATA) ./proxy.bundle.crt $(1)/etc/nginx/conf.d
+	$(INSTALL_DATA) ./proxy.crt $(1)/etc/nginx/conf.d
 	$(INSTALL_DATA) ./proxy.key $(1)/etc/nginx/conf.d
 endef
 
