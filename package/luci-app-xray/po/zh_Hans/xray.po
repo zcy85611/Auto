@@ -1,3 +1,6 @@
+msgid "Dedicated Line"
+msgstr "专线"
+
 msgid "Enable"
 msgstr "启用"
 
@@ -16,8 +19,8 @@ msgstr "服务器地址"
 msgid "UUID"
 msgstr "账号"
 
-msgid "Xray is not running"
-msgstr "Xray未运行"
+msgid "Service is not running"
+msgstr "服务未运行"
 
-msgid "Xray is running"
-msgstr "Xray正在运行"
+msgid "Service is running"
+msgstr "服务正在运行"

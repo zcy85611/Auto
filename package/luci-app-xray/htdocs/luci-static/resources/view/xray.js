@@ -24,14 +24,14 @@ return view.extend({
 		var running = Object.keys(res[0].instances || {}).length > 0;
 		var button, status;
 		if (running) {
-		    status = '<font color="green" size=3><b>' + _('Xray is running') + '</b></font>';}
+		    status = '<font color="green" size=3><b>' + _('Service is running') + '</b></font>';}
 		    else {
-		    status = '<font color="red" size=3><b>' + _('Xray is not running') + '</b></font>';}
+		    status = '<font color="red" size=3><b>' + _('Service is not running') + '</b></font>';}
 		    
 		var m, s, o;
 		
 		m = new form.Map('xray');
-		m.title = _('Xray');
+		m.title = _('Dedicated Line');
 		
 		s = m.section(form.TypedSection);
 		s.title = _('Running Status');
