@@ -57,8 +57,8 @@ define Package/xray-LZMA/install
 	$(INSTALL_DIR) $(1)/usr/bin/
 	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/xray $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/etc/xray
-	$(INSTALL_DATA) ./ip_cn $(1)/etc/xray
-	$(INSTALL_DATA) ./ip_reserve $(1)/etc/xray
+	$(INSTALL_DATA) ./ip_cnv4 $(1)/etc/xray
+	$(INSTALL_DATA) ./ip_cnv6 $(1)/etc/xray
 	$(INSTALL_DATA) ./xray.nft $(1)/etc/xray
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_BIN) ./init_xray $(1)/etc/uci-defaults
@@ -66,7 +66,6 @@ define Package/xray-LZMA/install
 	$(INSTALL_BIN) ./updateGFW $(1)/etc/scripts
 	$(INSTALL_DIR) $(1)/etc/dnsmasq.d
 	$(INSTALL_DATA) ./gfwlist.conf $(1)/etc/dnsmasq.d
-	$(INSTALL_DATA) ./apple.conf $(1)/etc/dnsmasq.d
 	$(INSTALL_DATA) ./forceproxy.conf $(1)/etc/dnsmasq.d
 endef
 

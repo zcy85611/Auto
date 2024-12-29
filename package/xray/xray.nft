@@ -1,63 +1,80 @@
 #!/usr/sbin/nft -f
 
-flush table xray
+add table inet xray
+flush table inet xray
 
-include "/etc/xray/ip_cn"
-include "/etc/xray/ip_reserve"
+include "/etc/xray/ip_cnv4"
+include "/etc/xray/ip_cnv6"
 
-table xray {
-	set china {
+table inet xray {
+	set china_v4 {
 		typeof ip daddr;flags interval;auto-merge;
-		elements = $ip_cn
+		elements = $ip_cnv4
 	}
 
-	set apple {
+	set china_v6 {
+		typeof ip6 daddr;flags interval;auto-merge;
+		elements = $ip_cnv6
+	}
+
+	set force_v4 {
 		typeof ip daddr;flags interval;auto-merge;
 	}
 
-	set gfw {
-		typeof ip daddr;flags interval;auto-merge;
+	set force_v6 {
+		typeof ip6 daddr;flags interval;auto-merge;
 	}
 
-	set force {
+	set reserve_v4 {
 		typeof ip daddr;flags interval;auto-merge;
+		elements = { 10.0.0.0/8,
+					100.64.0.0/10,
+					127.0.0.0/8,
+					169.254.0.0/16,
+					172.16.0.0/12,
+					192.0.0.0/24,
+					224.0.0.0/4,
+					240.0.0.0/4 }
 	}
 
-	set reserve {
-		typeof ip daddr;flags interval;auto-merge;
-		elements = $ip_reserve
-	}
-
-	set lan {
-		typeof ip daddr;flags interval;auto-merge;
+	set reserve_v6 {
+		typeof ip6 daddr;flags interval;auto-merge;
+		elements = { FC00::/7,
+					FD00::/8,
+					FE80::/10,
+					FF00::/8,
+					::1/128,
+					::/128
+					}
 	}
 
 	chain prerouting {
 		type filter hook prerouting priority filter; policy accept;
 		meta mark 0xff return
-		ip daddr @lan return
-		ip daddr @reserve return
-		ip daddr @apple return
-		ip daddr @china return
-		ip daddr @force ip protocol { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 accept
-		ip daddr @gfw ip protocol { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 accept
-		ip protocol { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 accept
+		ip daddr @reserve_v4 counter return
+		ip6 daddr @reserve_v6 counter return
+		ip daddr @force_v4 meta l4proto { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 counter accept
+		ip6 daddr @force_v6 meta l4proto { tcp, udp } meta mark set 1 tproxy ip6 to [::1]:12345 counter accept
+		ip daddr @china_v4 counter return
+		ip6 daddr @china_v6 counter return
+		meta l4proto { tcp, udp } meta mark set 1 tproxy ip to 127.0.0.1:12345 counter accept
+		meta l4proto { tcp, udp } meta mark set 1 tproxy ip6 to [::1]:12345 counter accept
 	}
 	
 	chain output {
 		type route hook output priority filter; policy accept;
 		meta mark 0xff return
-		ip daddr @lan return
-		ip daddr @reserve return
-		ip daddr @apple return
-		ip daddr @china return
-		ip daddr @force ip protocol { tcp, udp } meta mark set 1 accept
-		ip daddr @gfw ip protocol { tcp, udp }  meta mark set 1 accept
-		ip protocol { tcp, udp } meta mark set 1 accept
+		ip daddr @reserve_v4 counter return
+		ip6 daddr @reserve_v6 counter return
+		ip daddr @force_v4 meta l4proto { tcp, udp } meta mark set 1 counter accept
+		ip6 daddr @force_v6 meta l4proto { tcp, udp } meta mark set 1 counter accept
+		ip daddr @china_v4 counter return
+		ip6 daddr @china_v6 counter return
+		meta l4proto { tcp, udp } meta mark set 1 counter accept
 	}
 
 	chain divert {
-		type filter hook prerouting priority mangle; policy accept;
-		meta l4proto tcp socket transparent 1 meta mark set 1 accept
+		type filter hook prerouting priority mangle; policy accept; 
+		meta l4proto tcp socket transparent 1 meta mark set 1 counter accept
 	}
 }

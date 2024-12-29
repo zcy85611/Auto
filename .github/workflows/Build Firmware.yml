@@ -292,9 +292,14 @@ jobs:
         
         # Xray setup
         curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
-        echo "define ip_cn = {" > package/leozhao/xray/ip_cn
+        echo "define ip_cnv4 = {" > package/leozhao/xray/ip_cn
         awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cn
-        sed -i '$a}' package/leozhao/xray/ip_cn 
+        sed -i '$a}' package/leozhao/xray/ip_cnv4 
+        rm package/leozhao/xray/tmp_cnip
+        curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/ChanthMiao/China-IPv6-List/release/cn6.txt'
+        echo "define ip_cnv6 = {" > package/leozhao/xray/ip_cn
+        awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cn
+        sed -i '$a}' package/leozhao/xray/ip_cnv6
         rm package/leozhao/xray/tmp_cnip
         curl --create-dirs -o package/leozhao/xray/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
    
