@@ -19,9 +19,9 @@ if [ "$content_length" != "$local_size" ]; then
     echo "incomplete download, abort"
     rm -rf /tmp/ip_cn
 else
-	echo "define ip_cn = {" > /etc/xray/ip_cn
-	awk '{print $0 ","}' /tmp/ip_cn >> /etc/xray/ip_cn
-	sed -i '$a}' /etc/xray/ip_cn
+	echo "define ip_cnv4 = {" > /etc/xray/ip_cnv4
+	awk '{print $0 ","}' /tmp/ip_cn >> /etc/xray/ip_cnv4
+	sed -i '$a}' /etc/xray/ip_cnv4
 	rm -rf /tmp/ip_cn
 fi
 
