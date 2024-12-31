@@ -301,6 +301,7 @@ jobs:
         awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cnv6
         sed -i '$a}' package/leozhao/xray/ip_cnv6
         rm package/leozhao/xray/tmp_cnip
+        ls -alh package/leozhao/xray
         curl --create-dirs -o package/leozhao/xray/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
    
     - name: Apply patches
