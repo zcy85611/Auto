@@ -84,7 +84,7 @@ on:
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: main
+  REPO_BRANCH: openwrt-23.05
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -249,7 +249,7 @@ jobs:
         cp -rf files openwrt
         cp -rf tools openwrt
         cp -rf package openwrt/package/leozhao
-        cp -rf package/aria2/patches openwrt/package/feeds/packages/aria2
+        # cp -rf package/aria2/patches openwrt/package/feeds/packages/aria2
         cp -rf package/*.patch openwrt/feeds/packages
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh.patch openwrt/package/boot/uboot-mediatek/patches
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh-firmware.patch openwrt/target/linux/mediatek/patches-6.6
