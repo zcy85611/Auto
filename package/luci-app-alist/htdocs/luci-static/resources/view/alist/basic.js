@@ -91,9 +91,6 @@ return view.extend({
 		o = s.option(form.Value, 'cdn', _('CDN URL'));
 		o.default = '';
 
-		o = s.option(form.Value, 'jwt_secret', _('JWT Key'));
-		o.default = '';
-
 		o = s.option(form.Value, 'token_expires_in', _('Login Validity Period (hours)'));
 		o.datatype = 'uinteger';
 		o.default = '48';
