@@ -5,63 +5,35 @@
 'require rpc';
 'require uci';
 'require view';
+'require tools.widgets as widgets';
 
 var callServiceList = rpc.declare({
 	object: 'service',
 	method: 'list',
-	params: ['name'],
-	expect: { '': {} }
+	params: [ 'name' ],
+	expect: { 'alist': {} }
 });
 
-function getServiceStatus() {
-	return L.resolveDefault(callServiceList('alist'), {}).then(function (res) {
-		var isRunning = false;
-		try {
-			isRunning = res['alist']['instances']['alist']['running'];
-		} catch (e) { }
-		return isRunning;
-	});
-}
-
-function renderStatus(isRunning, protocol, webport) {
-	var spanTemp = '<em><span style="color:%s"><strong>%s %s</strong></span></em>';
-	var renderHTML;
-	if (isRunning) {
-		var button = String.format('<input class="cbi-button-reload" type="button" style="margin-left: 50px" value="%s" onclick="window.open(\'%s//%s:%s/\')">',
-			_('Open Web Interface'), protocol, window.location.hostname, webport);
-		renderHTML = spanTemp.format('green', 'Alist', _('RUNNING')) + button;
-	} else {
-		renderHTML = spanTemp.format('red', 'Alist', _('NOT RUNNING'));
-	}
-
-	return renderHTML;
-}
-
 return view.extend({
-	load: function () {
+	load: function() {
 		return Promise.all([
+			L.resolveDefault(callServiceList('alist')),
 			uci.load('alist')
 		]);
 	},
 
-	handleResetPassword: async function (data) {
-		var data_dir = uci.get(data[0], '@alist[0]', 'data_dir') || '/etc/alist';
-		try {
-			var newpassword = await fs.exec('/usr/bin/alist', ['admin', 'random', '--data', data_dir]);
-			var new_password = newpassword.stderr.match(/password:\s*(\S+)/)[1];
-			const textArea = document.createElement('textarea');
-			textArea.value = new_password;
-			document.body.appendChild(textArea);
-			textArea.select();
-			document.execCommand('copy');
-			document.body.removeChild(textArea);
-			alert(_('Username:') + 'admin\n' + _('New Password:') + new_password + '\n\n' + _('New password has been copied to clipboard.'));
-		} catch (error) {
-			console.error('Failed to reset password: ', error);
-		}
-	},
-
 	render: function (data) {
+		
+		var port = uci.get_first('alist', 'alist', 'port');
+		var running = Object.keys(data[0].instances || {}).length > 0;
+		var button, status;
+		if (running) {
+		    status = '<font color="green" size=3><b>' + _('AList is running') + '</b></font>';
+		    button = '&#160;<a class="btn" href="http://' + window.location.hostname + ':' + port + '" target="_blank">' + _('Open Web Interface') + '</a>';}
+		    else {
+		    status = '<font color="red" size=3><b>' + _('AList is not running') + '</b></font>';
+		    button = '';}
+		    
 		var m, s, o;
 		var webport = uci.get(data[0], '@alist[0]', 'port') || '5244';
 		var ssl = uci.get(data[0], '@alist[0]', 'ssl') || '0';
@@ -73,28 +45,16 @@ return view.extend({
 		}
 
 		m = new form.Map('alist', _('Alist'),
-			_('A file list program that supports multiple storage.') +
+			_('Default webUI/WebDAV login username is %s and password is %s.').format('<code>admin</code>', '<code>admin</code>') +
 			'<br><a href="https://alist.nn.ci/zh/guide/drivers/local.html" target="_blank">' +
 			_('User Manual') +
 			'</a>');
-
+			
 		s = m.section(form.TypedSection);
+		s.title = _('Running Status');
+		s.description = status + button;
 		s.anonymous = true;
-		s.addremove = false;
-
-		s.render = function () {
-			poll.add(function () {
-				return L.resolveDefault(getServiceStatus()).then(function (res) {
-					var view = document.getElementById('service_status');
-					view.innerHTML = renderStatus(res, protocol, webport);
-				});
-			});
-
-			return E('div', { class: 'cbi-section', id: 'status_bar' }, [
-				E('p', { id: 'service_status' }, _('Collecting data...'))
-			]);
-		}
-
+		
 		// init
 		s = m.section(form.TypedSection, 'alist', _('Basic Settings'));
 		s.anonymous = true;
@@ -115,12 +75,6 @@ return view.extend({
 
 		o = s.option(form.Flag, 'allow_wan', _('Open firewall port'));
 		o.rmempty = false;
-
-		o = s.option(form.Button, '_newpassword', _('Reset Password'),
-			_('Generate a new random password.'));
-		o.inputtitle = _('Reset Password');
-		o.inputstyle = 'apply';
-		o.onclick = L.bind(this.handleResetPassword, this, data);
 
 		// global
 		s = m.section(form.TypedSection, 'alist', _('Global Settings'));

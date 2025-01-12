@@ -8,8 +8,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Alist"
-msgstr "Alist 文件列表"
+msgid "Default webUI/WebDAV login username is %s and password is %s."
+msgstr "默认 webUI/WebDAV 登录用户名 %s 密码 %s。"
+
+msgid "AList is running"
+msgstr "AList正在运行"
+
+msgid "AList is not running"
+msgstr "AList未运行"
 
 msgid "Open Web Interface"
 msgstr "打开 Web 界面"

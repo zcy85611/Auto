@@ -210,6 +210,10 @@ start_service() {
 
 	json_dump > "$data_dir/config.json"
 
+	local database_type
+	config_get database_type alist "database_type" "sqlite3"
+	[ "$database_type" != "sqlite3" -o -e "/etc/alist/data.db" ] || "$PROG" --data "/etc/alist" admin set "admin" 2>"/dev/null"
+
 	procd_open_instance alist
 	procd_set_param command $PROG
 	procd_append_param command server
