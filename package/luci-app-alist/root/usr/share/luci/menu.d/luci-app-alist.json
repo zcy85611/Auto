@@ -10,20 +10,20 @@
 			"uci": { "alist": true }
 		}
 	},
-	"admin/services/alist/config": {
-		"title": "Settings",
+	"admin/services/alist/basic": {
+		"title": "Setting",
 		"order": 10,
 		"action": {
 			"type": "view",
-			"path": "alist/config"
+			"path": "alist/basic"
 		}
 	},
-	"admin/services/alist/log": {
-		"title": "Log",
+	"admin/services/alist/logs": {
+		"title": "Logs",
 		"order": 20,
 		"action": {
 			"type": "view",
-			"path": "alist/log"
+			"path": "alist/logs"
 		}
 	}
 }
