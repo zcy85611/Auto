@@ -2,7 +2,7 @@
 config alist
 	option enabled '0'
 	option port '5244'
-	option delayed_start '0'
+	option delayed_start '60'
 	option allow_wan '0'
 	option force '1'
 	option token_expires_in '48'
@@ -10,7 +10,7 @@ config alist
 	option tls_insecure_skip_verify '1'
 	option data_dir '/etc/alist'
 	option temp_dir '/tmp/alist'
-	option log '1'
+	option log '0'
 	option log_max_size '10'
 	option log_max_backups '5'
 	option log_max_age '28'
