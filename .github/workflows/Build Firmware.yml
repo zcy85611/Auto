@@ -77,7 +77,7 @@ on:
         default: 'skygunner5,123456aA'
         
       softwares:
-        description: 'rMcloud,acme,xray,alist,ttyd,msd_lite,omcproxy,dawn,oaf,samba,wireguard,uugame,frpc,openvpn'
+        description: 'rMcloud,acme,xray,alist,ttyd,msd_lite,omcproxy,dawn,oaf,samba,wireguard,uugame,frpc,openvpn,mwan3'
         type: string
         default: 'rMcloud,acme,xray,alist,ttyd'
 
