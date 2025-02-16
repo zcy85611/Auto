@@ -1,8 +1,8 @@
 
 config basic
-	option enabled '1'
+	option enabled '0'
 	option loglevel 'none'
-	option serverIP '104.21.226.143'
-	option serverAddr 'us.a2b9s5012.top'
+	option serverIP 'test'
+	option serverAddr 'test'
 	option port '443'
-	option uuid '65e16ef1-181f-49f3-a8fa-adbe15f4525f'
+	option uuid 'test'
