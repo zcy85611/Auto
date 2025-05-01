@@ -275,6 +275,7 @@ jobs:
         sed -i 's/192.168.1.1/${{ env.lanip }}/g' package/base-files/files/bin/config_generate
         sed -i '38itools-y += ucl upx' tools/Makefile
         sed -i '39i$(curdir)/upx/compile := $(curdir)/ucl/compile' tools/Makefile
+        sed -i '6i\	sleep 20 && /usr/lib/ddns/dynamic_dns_updater.sh -- start' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
         sed -i 's/LocalHost/${{ env.lanip }}/g' package/leozhao/rMcloud/rMcloud.conf
         echo 'fs.file-max=2097152' >> package/base-files/files/etc/sysctl.d/10-default.conf
         sed -i "26 i list addnmount '/etc/dnsmasq.d'" package/network/services/dnsmasq/files/dhcp.conf
