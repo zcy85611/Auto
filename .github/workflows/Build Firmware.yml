@@ -32,6 +32,7 @@ on:
         options:
         - 'cmcc_rax3000m'
         - 'cmcc_rax3000me_usb'
+        - 'cudy_tr3000-v1'
         - 'cmcc_xr30_nand'
         - 'cmcc_xr30_emmc'
         - 'abt_asr3000'
