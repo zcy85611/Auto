@@ -54,7 +54,7 @@ index 707988a..b9679a8 100644
  jcg,q30-pro|\
  mercusys,mr90x-v1-ubi|\
 diff --git a/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts b/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts
-index 86d8e85..b30ec17 100644
+index 86d8e85..aa39e34 100644
 --- a/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts
 +++ b/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts
 @@ -21,6 +21,8 @@
@@ -86,20 +86,25 @@ index 86d8e85..b30ec17 100644
  
  		partitions {
  			compatible = "fixed-partitions";
-@@ -196,8 +187,12 @@
+@@ -196,10 +187,15 @@
  
  			partition@5c0000 {
  				label = "ubi";
 -				reg = <0x5c0000 0x4000000>;
 +				reg = <0x5c0000 0x7a40000>;
  				compatible = "linux,ubi";
+-			};
+-		};
 +				volumes {
 +					ubi_rootdisk: ubi-volume-fit {
 +							volname = "fit";
-+					};		
- 			};
- 		};
++			  	};		
++             };
++	      };
++	   };
  	};
+ };
+ 
 diff --git a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 index 3235c9a..7485308 100755
 --- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
