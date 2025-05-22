@@ -1,0 +1,114 @@
+diff --git a/package/boot/arm-trusted-firmware-mediatek/Makefile b/package/boot/arm-trusted-firmware-mediatek/Makefile
+index da538d2..69570d8 100644
+--- a/package/boot/arm-trusted-firmware-mediatek/Makefile
++++ b/package/boot/arm-trusted-firmware-mediatek/Makefile
+@@ -221,6 +221,16 @@ define Trusted-Firmware-A/mt7981-spim-nand-ddr3
+   DDR_TYPE:=ddr3
+ endef
+ 
++define Trusted-Firmware-A/mt7981-cudy-tr3000-v1
++  NAME:=Cudy TR3000 v1 (SPI-NAND via SPIM, DDR3)
++  BOOT_DEVICE:=spim-nand
++  BUILD_SUBTARGET:=filogic
++  PLAT:=mt7981
++  DDR_TYPE:=ddr3
++  FIP_OFFSET:=0x3c0000
++  FIP_SIZE:=0x200000
++endef
++
+ define Trusted-Firmware-A/mt7986-ram-ddr4
+   NAME:=MediaTek MT7986 (RAM, DDR4)
+   BOOT_DEVICE:=ram
+diff --git a/package/boot/uboot-mediatek/Makefile b/package/boot/uboot-mediatek/Makefile
+index b508800..b80761d 100644
+--- a/package/boot/uboot-mediatek/Makefile
++++ b/package/boot/uboot-mediatek/Makefile
+@@ -267,6 +267,17 @@ define U-Boot/mt7981_cmcc_rax3000m-nand
+   DEPENDS:=+trusted-firmware-a-mt7981-spim-nand-ddr4
+ endef
+ 
++define U-Boot/mt7981_cudy_tr3000-v1
++  NAME:=Cudy TR3000 v1
++  BUILD_SUBTARGET:=filogic
++  BUILD_DEVICES:=cudy_tr3000-v1
++  UBOOT_CONFIG:=mt7981_cudy_tr3000-v1
++  UBOOT_IMAGE:=u-boot.fip
++  BL2_BOOTDEV:=cudy-tr3000-v1
++  BL2_SOC:=mt7981
++  DEPENDS:=+trusted-firmware-a-mt7981-cudy-tr3000-v1
++endef
++
+ define U-Boot/mt7981_glinet_gl-x3000
+   NAME:=GL.iNet GL-X3000
+   BUILD_SUBTARGET:=filogic
+diff --git a/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic b/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
+index 707988a..b9679a8 100644
+--- a/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
++++ b/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
+@@ -36,6 +36,7 @@ case "$board" in
+ abt,asr3000|\
+ asus,zenwifi-bt8-ubootmod|\
+ cmcc,a10-ubootmod|\
++cudy,tr3000-v1|\
+ h3c,magic-nx30-pro|\
+ jcg,q30-pro|\
+ mercusys,mr90x-v1-ubi|\
+diff --git a/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts b/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts
+index 86d8e85..b30ec17 100644
+--- a/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts
++++ b/target/linux/mediatek/dts/mt7981b-cudy-tr3000-v1.dts
+@@ -21,6 +21,8 @@
+ 
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
++		bootargs = "root=/dev/fit0 rootwait";
++		rootdisk = <&ubi_rootdisk>;
+ 	};
+ 
+ 	gpio-keys {
+@@ -123,19 +125,8 @@
+ 		compatible = "spi-nand";
+ 		reg = <0>;
+ 		spi-max-frequency = <52000000>;
+-
+-		spi-cal-enable;
+-		spi-cal-mode = "read-data";
+-		spi-cal-datalen = <7>;
+-		spi-cal-data = /bits/ 8 <0x53 0x50 0x49 0x4E 0x41 0x4E 0x44>;
+-		spi-cal-addrlen = <5>;
+-		spi-cal-addr = /bits/ 32 <0x0 0x0 0x0 0x0 0x0>;
+-
+ 		spi-tx-bus-width = <4>;
+ 		spi-rx-bus-width = <4>;
+-		mediatek,nmbm;
+-		mediatek,bmt-max-ratio = <1>;
+-		mediatek,bmt-max-reserved-blocks = <64>;
+ 
+ 		partitions {
+ 			compatible = "fixed-partitions";
+@@ -196,8 +187,12 @@
+ 
+ 			partition@5c0000 {
+ 				label = "ubi";
+-				reg = <0x5c0000 0x4000000>;
++				reg = <0x5c0000 0x7a40000>;
+ 				compatible = "linux,ubi";
++				volumes {
++					ubi_rootdisk: ubi-volume-fit {
++							volname = "fit";
++					};		
+ 			};
+ 		};
+ 	};
+diff --git a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
+index 3235c9a..7485308 100755
+--- a/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
++++ b/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
+@@ -74,6 +74,7 @@ platform_do_upgrade() {
+ 	bananapi,bpi-r4-poe|\
+ 	cmcc,a10-ubootmod|\
+ 	cmcc,rax3000m|\
++	cudy,tr3000-v1|\
+ 	gatonetworks,gdsp|\
+ 	h3c,magic-nx30-pro|\
+ 	jcg,q30-pro|\
