@@ -28,7 +28,7 @@ index da538d2..95507f0 100644
  	mt7981-emmc-ddr4 \
  	mt7981-spim-nand-ddr4 \
 diff --git a/package/boot/uboot-mediatek/Makefile b/package/boot/uboot-mediatek/Makefile
-index b508800..b80761d 100644
+index b508800..ea69f2e 100644
 --- a/package/boot/uboot-mediatek/Makefile
 +++ b/package/boot/uboot-mediatek/Makefile
 @@ -267,6 +267,17 @@ define U-Boot/mt7981_cmcc_rax3000m-nand
@@ -49,6 +49,14 @@ index b508800..b80761d 100644
  define U-Boot/mt7981_glinet_gl-x3000
    NAME:=GL.iNet GL-X3000
    BUILD_SUBTARGET:=filogic
+@@ -883,6 +894,7 @@ UBOOT_TARGETS := \
+ 	mt7981_cmcc_a10 \
+ 	mt7981_cmcc_rax3000m-emmc \
+ 	mt7981_cmcc_rax3000m-nand \
++	mt7981_cudy_tr3000-v1 \
+ 	mt7981_gatonetworks_gdsp \
+ 	mt7981_glinet_gl-x3000 \
+ 	mt7981_glinet_gl-xe3000 \
 diff --git a/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic b/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
 index 707988a..b9679a8 100644
 --- a/package/boot/uboot-tools/uboot-envtools/files/mediatek_filogic
