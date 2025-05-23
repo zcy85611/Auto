@@ -1,5 +1,5 @@
 diff --git a/package/boot/arm-trusted-firmware-mediatek/Makefile b/package/boot/arm-trusted-firmware-mediatek/Makefile
-index da538d2..69570d8 100644
+index da538d2..95507f0 100644
 --- a/package/boot/arm-trusted-firmware-mediatek/Makefile
 +++ b/package/boot/arm-trusted-firmware-mediatek/Makefile
 @@ -221,6 +221,16 @@ define Trusted-Firmware-A/mt7981-spim-nand-ddr3
@@ -19,6 +19,14 @@ index da538d2..69570d8 100644
  define Trusted-Firmware-A/mt7986-ram-ddr4
    NAME:=MediaTek MT7986 (RAM, DDR4)
    BOOT_DEVICE:=ram
+@@ -551,6 +561,7 @@ TFA_TARGETS:= \
+ 	mt7981-snand-ddr3 \
+ 	mt7981-spim-nand-ddr3 \
+ 	mt7981-spim-nand-ubi-ddr4 \
++	mt7981-cudy-tr3000-v1 \
+ 	mt7981-ram-ddr4 \
+ 	mt7981-emmc-ddr4 \
+ 	mt7981-spim-nand-ddr4 \
 diff --git a/package/boot/uboot-mediatek/Makefile b/package/boot/uboot-mediatek/Makefile
 index b508800..b80761d 100644
 --- a/package/boot/uboot-mediatek/Makefile
