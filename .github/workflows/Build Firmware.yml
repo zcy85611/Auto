@@ -223,7 +223,7 @@ jobs:
         # Self-made script setup
         chmod +x -R /etc/scripts/*
         chmod +x -R /etc/init.d/*
-        echo "0 0 * * 0 /etc/scripts/updateAD" >> /etc/crontabs/root
+        # echo "0 0 * * 0 /etc/scripts/updateAD" >> /etc/crontabs/root
         echo "PATH=$PATH:/etc/scripts" >> /etc/profile
         source /etc/profile
 
