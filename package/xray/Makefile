@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=xray-core
-PKG_VERSION:=25.6.9
+PKG_VERSION:=25.6.8
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
