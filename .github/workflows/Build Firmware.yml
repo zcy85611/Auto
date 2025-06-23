@@ -31,7 +31,7 @@ on:
         type: choice
         options:
         - 'cmcc_rax3000m'
-        - 'cmcc_rax3000me_usb'
+        - 'cmcc_rax3000me_an8855'
         - 'cudy_tr3000-v1-ubootmod'
         - 'cmcc_xr30_nand'
         - 'cmcc_xr30_emmc'
@@ -150,7 +150,7 @@ jobs:
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
         elif [ ${{ inputs.device }} == "cmcc_xr30_nand" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
-        elif [ ${{ inputs.device }} == "cmcc_rax3000me_usb" ];then
+        elif [ ${{ inputs.device }} == "cmcc_rax3000me_an8855" ];then
             echo "devicename=cmcc_rax3000m" >> $GITHUB_ENV
         else
             echo "devicename=${{ inputs.device }}"  >> $GITHUB_ENV
