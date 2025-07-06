@@ -78,9 +78,9 @@ on:
         default: 'skygunner5,123456aA'
         
       softwares:
-        description: 'rMcloud,acme,xray,alist,ttyd,msd_lite,omcproxy,dawn,oaf,samba,wireguard,uugame,frpc,openvpn,mwan3,squid,tailscale'
+        description: 'acme,xray,openlist,ttyd,rMcloud,msd_lite,omcproxy,dawn,oaf,samba,wireguard,frpc,openvpn,mwan3,squid,tailscale'
         type: string
-        default: 'rMcloud,acme,xray,alist,ttyd'
+        default: 'acme,xray,openlist,ttyd'
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
@@ -287,8 +287,8 @@ jobs:
         sed -i 's/nonegcache	0/nonegcache	1/g' package/network/services/dnsmasq/files/dhcp.conf
         echo 'conf-dir=/etc/dnsmasq.d' >> package/network/services/dnsmasq/files/dnsmasq.conf
         sed -i $'s/${vendorid:+-V "$vendorid"}/${vendorid:+-V \'\' "-x 0x3c:$vendorid"}/g' package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
-        rm -rf feeds/luci/applications/luci-app-alist
-        rm -rf feeds/packages/net/alist
+        rm -rf feeds/luci/applications/luci-app-openlist
+        rm -rf feeds/packages/net/openlist
         
         # Xray setup
         curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
