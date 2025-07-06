@@ -11,6 +11,9 @@ msgstr ""
 msgid "OpenList"
 msgstr "OpenList"
 
+msgid "Default WebUI/WebDAV login username is %s and password is %s."
+msgstr "默认 WebUI/WebDAV 登录用户名 %s 密码 %s。"
+
 msgid "Open Web Interface"
 msgstr "打开 Web 界面"
 
@@ -62,11 +65,11 @@ msgstr "数据目录"
 msgid "Cache directory"
 msgstr "缓存目录"
 
-msgid "RUNNING"
-msgstr "运行中"
+msgid "OpenList is running"
+msgstr "OpenList正在运行"
 
-msgid "NOT RUNNING"
-msgstr "未运行"
+msgid "OpenList is not running"
+msgstr "OpenList正在运行未运行"
 
 msgid "Collecting data..."
 msgstr "收集数据..."
