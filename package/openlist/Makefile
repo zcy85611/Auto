@@ -93,10 +93,6 @@ define Package/openlist/install
 	$(call GoPackage/Package/Install/Bin,$(PKG_INSTALL_DIR))
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/OpenList $(1)/usr/bin/openlist
-	$(INSTALL_DIR) $(1)/etc/config $(1)/etc/init.d $(1)/etc/openlist
-	$(INSTALL_CONF) $(CURDIR)/files/openlist.config $(1)/etc/config/openlist
-	$(INSTALL_BIN) $(CURDIR)/files/openlist.init $(1)/etc/init.d/openlist
-	$(INSTALL_DATA) $(CURDIR)/files/data.db $(1)/etc/openlist/data.db
 endef
 
 $(eval $(call Download,openlist-frontend))
