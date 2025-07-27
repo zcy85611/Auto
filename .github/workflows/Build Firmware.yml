@@ -31,7 +31,6 @@ on:
         type: choice
         options:
         - 'cmcc_rax3000m'
-        - 'cmcc_rax3000me_an8855'
         - 'cudy_tr3000-v1-ubootmod'
         - 'cmcc_xr30_nand'
         - 'cmcc_xr30_emmc'
@@ -251,6 +250,8 @@ jobs:
         [ -n "$(ls package/*.patch 2>/dev/null)" ] && cp -rf package/*.patch openwrt/feeds/packages
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh.patch openwrt/package/boot/uboot-mediatek/patches
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh-firmware.patch openwrt/target/linux/mediatek/patches-6.6
+        rm -rf openwrt/package/boot/uboot-mediatek/patches/100-20-mtd-spi-nand-add-support-for-FudanMicro-chips.patch
+        rm -rf openwrt/package/boot/uboot-mediatek/patches/101-01-mtd-spinand-add-support-for-FORESEE-F35SQA002G.patch
 
         cp -rf package/luci-app-nfs/nfsd.init openwrt/feeds/packages/net/nfs-kernel-server/files/nfsd.init
         if [ -e router_config/${{ inputs.device }} ];then
