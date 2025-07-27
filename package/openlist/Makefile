@@ -6,7 +6,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=openlist2
+PKG_NAME:=openlist
 PKG_VERSION:=4.0.9
 PKG_WEB_VERSION:=4.0.9
 PKG_RELEASE:=1
