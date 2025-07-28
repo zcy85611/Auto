@@ -247,7 +247,8 @@ jobs:
         cp -rf tools openwrt
         cp -rf package openwrt/package/leozhao
         cp -rf package/aria2/patches openwrt/package/feeds/packages/aria2
-        [ -n "$(ls package/*.patch 2>/dev/null)" ] && cp -rf package/*.patch openwrt/feeds/packages
+        [ -n "$(ls package/patches/default/*.patch 2>/dev/null)" ] && cp -rf openwrt
+        [ -n "$(ls package/patches/feeds/*.patch 2>/dev/null)" ] && cp -rf package/*.patch openwrt/feeds/packages
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh.patch openwrt/package/boot/uboot-mediatek/patches
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh-firmware.patch openwrt/target/linux/mediatek/patches-6.6
         rm -rf openwrt/package/boot/uboot-mediatek/patches/100-20-mtd-spi-nand-add-support-for-FudanMicro-chips.patch
