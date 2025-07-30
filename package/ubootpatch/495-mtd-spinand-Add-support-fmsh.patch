@@ -1,13 +1,13 @@
 diff --git a/drivers/mtd/nand/spi/Makefile b/drivers/mtd/nand/spi/Makefile
-index 65b836b3..ace1933d 100644
+index 65b836b34ca..14dcde2f88a 100644
 --- a/drivers/mtd/nand/spi/Makefile
 +++ b/drivers/mtd/nand/spi/Makefile
-@@ -1,5 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
+@@ -2,4 +2,6 @@
  
--spinand-objs := core.o esmt.o foresee.o etron.o gigadevice.o macronix.o micron.o paragon.o
-+spinand-objs := core.o esmt.o foresee.o etron.o gigadevice.o macronix.o micron.o paragon.o fmsh.o
+ spinand-objs := core.o esmt.o gigadevice.o macronix.o micron.o paragon.o
  spinand-objs += toshiba.o winbond.o xtx.o
++spinand-objs += etron.o
++spinand-objs += fmsh.o
  obj-$(CONFIG_MTD_SPI_NAND) += spinand.o
 diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
 index f5ddfbf4..30e9c6a8 100644
