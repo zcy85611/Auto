@@ -186,8 +186,8 @@ index 00000000..c7ee9ac7
 +};
 +
 +const struct spinand_manufacturer fudanmicro_spinand_manufacturer = {
-+	.id = SPINAND_MFR_FMSH,
-+	.name = "FUDAN Micron",
++	.id = SPINAND_MFR_FUDANMICRO,
++	.name = "FUDAN Micro",
 +	.chips = fudanmicro_spinand_table,
 +	.nchips = ARRAY_SIZE(fudanmicro_spinand_table),
 +	.ops = &fudanmicro_spinand_manuf_ops,
