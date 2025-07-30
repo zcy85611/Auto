@@ -1,3 +1,11 @@
+--- a/drivers/mtd/nand/spi/Makefile
++++ b/drivers/mtd/nand/spi/Makefile
+@@ -3,4 +3,5 @@
+ spinand-objs := core.o esmt.o gigadevice.o macronix.o micron.o paragon.o
+ spinand-objs += toshiba.o winbond.o xtx.o
+ spinand-objs += etron.o
++spinand-objs += fudanmicro.o
+ obj-$(CONFIG_MTD_SPI_NAND) += spinand.o
 diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
 index f5ddfbf4..30e9c6a8 100644
 --- a/drivers/mtd/nand/spi/core.c
@@ -6,15 +14,15 @@ index f5ddfbf4..30e9c6a8 100644
  	&winbond_spinand_manufacturer,
  	&esmt_c8_spinand_manufacturer,
  	&xtx_spinand_manufacturer,
-+	&fmsh_spinand_manufacturer,
++	&fudanmicro_spinand_manufacturer,
  };
  
  static int spinand_manufacturer_match(struct spinand_device *spinand,
-diff --git a/drivers/mtd/nand/spi/fmsh.c b/drivers/mtd/nand/spi/fmsh.c
+diff --git a/drivers/mtd/nand/spi/fudanmicro.c b/drivers/mtd/nand/spi/fudanmicro.c
 new file mode 100644
 index 00000000..c7ee9ac7
 --- /dev/null
-+++ b/drivers/mtd/nand/spi/fmsh.c
++++ b/drivers/mtd/nand/spi/fudanmicro.c
 @@ -0,0 +1,168 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -193,7 +201,7 @@ index 13b5a52f..5bfb636d 100644
  extern const struct spinand_manufacturer winbond_spinand_manufacturer;
  extern const struct spinand_manufacturer esmt_c8_spinand_manufacturer;
  extern const struct spinand_manufacturer xtx_spinand_manufacturer;
-+extern const struct spinand_manufacturer fmsh_spinand_manufacturer;
++extern const struct spinand_manufacturer fudanmicro_spinand_manufacturer;
  
  /**
   * struct spinand_op_variants - SPI NAND operation variants
