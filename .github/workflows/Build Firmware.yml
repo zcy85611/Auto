@@ -249,6 +249,10 @@ jobs:
         cp -rf package/aria2/patches openwrt/package/feeds/packages/aria2
         [ -n "$(ls package/patches/default/*.patch 2>/dev/null)" ] && cp -rf package/patches/default/*.patch openwrt
         [ -n "$(ls package/patches/feeds/*.patch 2>/dev/null)" ] && cp -rf package/patches/feeds/*.patch openwrt/feeds/packages
+        rm -rf openwrt/package/boot/uboot-mediatek/patches/100-20-mtd-spi-nand-add-support-for-FudanMicro-chips.patch
+        rm -rf openwrt/package/boot/uboot-mediatek/patches/101-01-mtd-spinand-add-support-for-FORESEE-F35SQA002G.patch
+        rm -rf openwrt/package/boot/uboot-mediatek/patches/101-02-mtd-spinand-add-support-for-FORESEE-F35SQA001G.patch
+        rm -rf openwrt/package/boot/uboot-mediatek/patches/101-03-mtd-spinand-fix-support-for-FORESEE.patch
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh.patch openwrt/package/boot/uboot-mediatek/patches/100-20-mtd-spi-nand-add-support-for-FudanMicro-chips.patch
         cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh-firmware.patch openwrt/target/linux/mediatek/patches-6.6
 
