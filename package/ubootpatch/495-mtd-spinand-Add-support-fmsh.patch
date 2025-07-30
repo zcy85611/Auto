@@ -39,7 +39,7 @@ index 00000000..c7ee9ac7
 +#include <linux/bitops.h>
 +#include <linux/mtd/spinand.h>
 +
-+#define SPINAND_MFR_FMSH		0xA1
++#define SPINAND_MFR_FUDANMICRO		0xA1
 +
 +static SPINAND_OP_VARIANTS(read_cache_variants,
 +		SPINAND_PAGE_READ_FROM_CACHE_QUADIO_OP(0, 2, NULL, 0),
@@ -134,7 +134,7 @@ index 00000000..c7ee9ac7
 +		return -EBADMSG;
 +}
 +
-+static const struct spinand_info fmsh_spinand_table[] = {
++static const struct spinand_info fudanmicro_spinand_table[] = {
 +	SPINAND_INFO("FM25S01A",
 +		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xE4),
 +		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
@@ -182,15 +182,15 @@ index 00000000..c7ee9ac7
 +		     SPINAND_ECCINFO(&fm25s01_ooblayout, fm25s01bi3_ecc_ecc_get_status)),
 +};
 +
-+static const struct spinand_manufacturer_ops fmsh_spinand_manuf_ops = {
++static const struct spinand_manufacturer_ops fudanmicro_spinand_manuf_ops = {
 +};
 +
-+const struct spinand_manufacturer fmsh_spinand_manufacturer = {
++const struct spinand_manufacturer fudanmicro_spinand_manufacturer = {
 +	.id = SPINAND_MFR_FMSH,
-+	.name = "FMSH",
-+	.chips = fmsh_spinand_table,
-+	.nchips = ARRAY_SIZE(fmsh_spinand_table),
-+	.ops = &fmsh_spinand_manuf_ops,
++	.name = "FUDAN Micron",
++	.chips = fudanmicro_spinand_table,
++	.nchips = ARRAY_SIZE(fudanmicro_spinand_table),
++	.ops = &fudanmicro_spinand_manuf_ops,
 +};
 \ No newline at end of file
 diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
