@@ -2,7 +2,7 @@ diff --git a/drivers/mtd/nand/spi/Makefile b/drivers/mtd/nand/spi/Makefile
 index 65b836b34ca..14dcde2f88a 100644
 --- a/drivers/mtd/nand/spi/Makefile
 +++ b/drivers/mtd/nand/spi/Makefile
-@@ -2,4 +2,6 @@
+@@ -2,5 +2,6 @@
  
  spinand-objs := core.o esmt.o gigadevice.o macronix.o micron.o paragon.o
  spinand-objs += toshiba.o winbond.o xtx.o
