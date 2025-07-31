@@ -1,13 +1,10 @@
-diff --git a/drivers/mtd/nand/spi/Makefile b/drivers/mtd/nand/spi/Makefile
-index 65b836b34ca..14dcde2f88a 100644
 --- a/drivers/mtd/nand/spi/Makefile
 +++ b/drivers/mtd/nand/spi/Makefile
-@@ -2,5 +2,6 @@
- 
+@@ -3,4 +3,5 @@
  spinand-objs := core.o esmt.o gigadevice.o macronix.o micron.o paragon.o
  spinand-objs += toshiba.o winbond.o xtx.o
  spinand-objs += etron.o
-+spinand-objs += fmsh.o
++spinand-objs += fudanmicro.o
  obj-$(CONFIG_MTD_SPI_NAND) += spinand.o
 diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
 index f5ddfbf4..30e9c6a8 100644
@@ -17,15 +14,15 @@ index f5ddfbf4..30e9c6a8 100644
  	&winbond_spinand_manufacturer,
  	&esmt_c8_spinand_manufacturer,
  	&xtx_spinand_manufacturer,
-+	&fmsh_spinand_manufacturer,
++	&fudanmicro_spinand_manufacturer,
  };
  
  static int spinand_manufacturer_match(struct spinand_device *spinand,
-diff --git a/drivers/mtd/nand/spi/fmsh.c b/drivers/mtd/nand/spi/fmsh.c
+diff --git a/drivers/mtd/nand/spi/fudanmicro.c b/drivers/mtd/nand/spi/fudanmicro.c
 new file mode 100644
 index 00000000..c7ee9ac7
 --- /dev/null
-+++ b/drivers/mtd/nand/spi/fmsh.c
++++ b/drivers/mtd/nand/spi/fudanmicro.c
 @@ -0,0 +1,168 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -42,7 +39,7 @@ index 00000000..c7ee9ac7
 +#include <linux/bitops.h>
 +#include <linux/mtd/spinand.h>
 +
-+#define SPINAND_MFR_FMSH		0xA1
++#define SPINAND_MFR_FUDANMICRO		0xA1
 +
 +static SPINAND_OP_VARIANTS(read_cache_variants,
 +		SPINAND_PAGE_READ_FROM_CACHE_QUADIO_OP(0, 2, NULL, 0),
@@ -137,7 +134,7 @@ index 00000000..c7ee9ac7
 +		return -EBADMSG;
 +}
 +
-+static const struct spinand_info fmsh_spinand_table[] = {
++static const struct spinand_info fudanmicro_spinand_table[] = {
 +	SPINAND_INFO("FM25S01A",
 +		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xE4),
 +		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
@@ -185,15 +182,15 @@ index 00000000..c7ee9ac7
 +		     SPINAND_ECCINFO(&fm25s01_ooblayout, fm25s01bi3_ecc_ecc_get_status)),
 +};
 +
-+static const struct spinand_manufacturer_ops fmsh_spinand_manuf_ops = {
++static const struct spinand_manufacturer_ops fudanmicro_spinand_manuf_ops = {
 +};
 +
-+const struct spinand_manufacturer fmsh_spinand_manufacturer = {
-+	.id = SPINAND_MFR_FMSH,
-+	.name = "FMSH",
-+	.chips = fmsh_spinand_table,
-+	.nchips = ARRAY_SIZE(fmsh_spinand_table),
-+	.ops = &fmsh_spinand_manuf_ops,
++const struct spinand_manufacturer fudanmicro_spinand_manufacturer = {
++	.id = SPINAND_MFR_FUDANMICRO,
++	.name = "FUDAN Micro",
++	.chips = fudanmicro_spinand_table,
++	.nchips = ARRAY_SIZE(fudanmicro_spinand_table),
++	.ops = &fudanmicro_spinand_manuf_ops,
 +};
 \ No newline at end of file
 diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
@@ -204,7 +201,7 @@ index 13b5a52f..5bfb636d 100644
  extern const struct spinand_manufacturer winbond_spinand_manufacturer;
  extern const struct spinand_manufacturer esmt_c8_spinand_manufacturer;
  extern const struct spinand_manufacturer xtx_spinand_manufacturer;
-+extern const struct spinand_manufacturer fmsh_spinand_manufacturer;
++extern const struct spinand_manufacturer fudanmicro_spinand_manufacturer;
  
  /**
   * struct spinand_op_variants - SPI NAND operation variants
