@@ -29,7 +29,7 @@ GO_PKG_LDFLAGS_X:= \
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
-define Package/xray-LZMA
+define Package/Dedicated-Line
   TITLE:=Dedicated Line
   SECTION:=net
   CATEGORY:=Network
@@ -38,7 +38,7 @@ define Package/xray-LZMA
   DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle
 endef
 
-define Package/xray-LZMA/description
+define Package/Dedicated-Line/description
   Dedicated Line
 endef
 
@@ -53,15 +53,15 @@ define Build/Compile
 	$(STAGING_DIR_HOST)/bin/upx --lzma --best $(GO_PKG_BUILD_BIN_DIR)/xray || true
 endef
 
-define Package/xray-LZMA/install
+define Package/Dedicated-Line/install
 	$(INSTALL_DIR) $(1)/usr/bin/
-	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/xray $(1)/usr/bin
-	$(INSTALL_DIR) $(1)/etc/xray
-	$(INSTALL_DATA) ./ip_cnv4 $(1)/etc/xray
-	$(INSTALL_DATA) ./ip_cnv6 $(1)/etc/xray
-	$(INSTALL_DATA) ./xray.nft $(1)/etc/xray
+	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/xray $(1)/usr/bin/dline
+	$(INSTALL_DIR) $(1)/etc/dline
+	$(INSTALL_DATA) ./ip_cnv4 $(1)/etc/dline
+	$(INSTALL_DATA) ./ip_cnv6 $(1)/etc/dline
+	$(INSTALL_DATA) ./dline.nft $(1)/etc/dline
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
-	$(INSTALL_BIN) ./init_xray $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./init_dline $(1)/etc/uci-defaults
 	$(INSTALL_DIR) $(1)/etc/scripts
 	$(INSTALL_BIN) ./updateGFW $(1)/etc/scripts
 	$(INSTALL_DIR) $(1)/etc/dnsmasq.d
@@ -69,4 +69,4 @@ define Package/xray-LZMA/install
 	$(INSTALL_DATA) ./forceproxy.conf $(1)/etc/dnsmasq.d
 endef
 
-$(eval $(call BuildPackage,xray-LZMA))
+$(eval $(call BuildPackage,Dedicated-Line))

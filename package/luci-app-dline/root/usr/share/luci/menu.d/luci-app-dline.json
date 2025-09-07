@@ -1,13 +1,13 @@
 {
-	"admin/services/xray": {
+	"admin/services/dline": {
 		"title": "Dedicated Line",
 		"order": 80,
 		"action": {
 			"type": "view",
-			"path": "xray"
+			"path": "dline"
 		},
 		"depends": {
-			"acl": [ "luci-app-xray" ]
+			"acl": [ "luci-app-dline" ]
 		}
 	}
 }

@@ -1,12 +1,12 @@
 #!/usr/sbin/nft -f
 
-add table inet xray
-flush table inet xray
+add table inet dline
+flush table inet dline
 
-include "/etc/xray/ip_cnv4"
-include "/etc/xray/ip_cnv6"
+include "/etc/dline/ip_cnv4"
+include "/etc/dline/ip_cnv6"
 
-table inet xray {
+table inet dline {
 	set china_v4 {
 		typeof ip daddr;flags interval;auto-merge;
 		elements = $ip_cnv4

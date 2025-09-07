@@ -77,9 +77,9 @@ on:
         default: 'skygunner5,123456aA'
         
       softwares:
-        description: 'acme,xray,openlist,ttyd,rMcloud,msd_lite,omcproxy,dawn,oaf,samba,wireguard,frpc,openvpn,mwan3,squid,tailscale'
+        description: 'acme,dline,openlist,ttyd,rMcloud,msd_lite,omcproxy,dawn,oaf,samba,wireguard,frpc,openvpn,mwan3,squid,tailscale'
         type: string
-        default: 'acme,xray,openlist,ttyd'
+        default: 'acme,dline,openlist,ttyd'
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
@@ -293,19 +293,19 @@ jobs:
         rm -rf feeds/luci/applications/luci-app-openlist
         rm -rf feeds/packages/net/openlist
         
-        # Xray setup
-        curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
-        echo "define ip_cnv4 = {" > package/leozhao/xray/ip_cnv4
-        awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cnv4
-        sed -i '$a}' package/leozhao/xray/ip_cnv4 
-        rm package/leozhao/xray/tmp_cnip
-        curl --create-dirs -o package/leozhao/xray/tmp_cnip 'https://raw.githubusercontent.com/ChanthMiao/China-IPv6-List/release/cn6.txt'
-        echo "define ip_cnv6 = {" > package/leozhao/xray/ip_cnv6
-        awk '{print $0 ","}' package/leozhao/xray/tmp_cnip >> package/leozhao/xray/ip_cnv6
-        sed -i '$a}' package/leozhao/xray/ip_cnv6
-        rm package/leozhao/xray/tmp_cnip
-        ls -alh package/leozhao/xray
-        curl --create-dirs -o package/leozhao/xray/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
+        # Dedicated-Line setup
+        curl --create-dirs -o package/leozhao/dline/tmp_cnip 'https://raw.githubusercontent.com/misakaio/chnroutes2/master/chnroutes.txt'
+        echo "define ip_cnv4 = {" > package/leozhao/dline/ip_cnv4
+        awk '{print $0 ","}' package/leozhao/dline/tmp_cnip >> package/leozhao/dline/ip_cnv4
+        sed -i '$a}' package/leozhao/dline/ip_cnv4 
+        rm package/leozhao/dline/tmp_cnip
+        curl --create-dirs -o package/leozhao/dline/tmp_cnip 'https://raw.githubusercontent.com/ChanthMiao/China-IPv6-List/release/cn6.txt'
+        echo "define ip_cnv6 = {" > package/leozhao/dline/ip_cnv6
+        awk '{print $0 ","}' package/leozhao/dline/tmp_cnip >> package/leozhao/dline/ip_cnv6
+        sed -i '$a}' package/leozhao/dline/ip_cnv6
+        rm package/leozhao/dline/tmp_cnip
+        ls -alh package/leozhao/dline
+        curl --create-dirs -o package/leozhao/dline/gfwlist.conf 'https://raw.githubusercontent.com/zcy85611/dnsmasq_rules/main/gfwlist.conf'
    
     - name: Apply patches
       run: |

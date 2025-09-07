@@ -10,12 +10,12 @@ var callServiceList = rpc.declare({
 	method: 'list',
 	params: ['name'],
 	expect: {
-		'xray': {}
+		'dline': {}
 	}
 });
 return view.extend({
 	load: function() {
-		return Promise.all([L.resolveDefault(callServiceList('xray')), uci.load('xray')]);
+		return Promise.all([L.resolveDefault(callServiceList('dline')), uci.load('dline')]);
 	},
 	render: function(res) {
 		var running = Object.keys(res[0].instances || {}).length > 0;
@@ -26,7 +26,7 @@ return view.extend({
 			status = '<font color="red" size=3><b>' + _('Service is not running') + '</b></font>';
 		}
 		var m, s, o;
-		m = new form.Map('xray');
+		m = new form.Map('dline');
 		m.title = _('Dedicated Line');
 		s = m.section(form.TypedSection);
 		s.title = _('Running Status');

@@ -6,8 +6,8 @@
 
 include $(TOPDIR)/rules.mk
 
-LUCI_TITLE:=LuCI support for Xray
-LUCI_DEPENDS:=+xray-LZMA
+LUCI_TITLE:=LuCI support for Dedicated line
+LUCI_DEPENDS:=+Dedicated-Line
 LUCI_PKGARCH:=all
 
 include $(TOPDIR)/feeds/luci/luci.mk
