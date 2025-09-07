@@ -9,7 +9,7 @@ PKG_SOURCE_URL:=https://github.com/XTLS/Xray-core.git
 PKG_SOURCE_VERSION:=118131fcafaece59af1b9f4341d924dfcc9838b3
 PKG_SOURCE_SUBDIR:=Xray-core-$(PKG_VERSION)
 
-PKG_MAINTAINER:=Leo Zhao
+PKG_MAINTAINER:=skygunner5
 PKG_LICENSE:=MPL-2.0
 PKG_LICENSE_FILES:=LICENSE
 
@@ -30,7 +30,7 @@ include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
 define Package/xray-LZMA
-  TITLE:=A platform for building proxies to bypass network restrictions
+  TITLE:=Dedicated Line
   SECTION:=net
   CATEGORY:=Network
   URL:=https://github.com/XTLS/Xray-core
@@ -39,8 +39,7 @@ define Package/xray-LZMA
 endef
 
 define Package/xray-LZMA/description
-  Xray, Penetrates Everything. Also the best v2ray-core, with XTLS support. Fully compatible configuration.
-  It secures your network connections and thus protects your privacy.
+  Dedicated Line
 endef
 
 ifneq ($(CONFIG_USE_MUSL),)
