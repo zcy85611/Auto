@@ -29,7 +29,7 @@ GO_PKG_LDFLAGS_X:= \
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
-define Package/Dedicated-Line
+define Package/dline
   TITLE:=Dedicated Line
   SECTION:=net
   CATEGORY:=Network
@@ -38,7 +38,7 @@ define Package/Dedicated-Line
   DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle
 endef
 
-define Package/Dedicated-Line/description
+define Package/dline/description
   Dedicated Line
 endef
 
@@ -53,7 +53,7 @@ define Build/Compile
 	$(STAGING_DIR_HOST)/bin/upx --lzma --best $(GO_PKG_BUILD_BIN_DIR)/xray || true
 endef
 
-define Package/Dedicated-Line/install
+define Package/dline/install
 	$(INSTALL_DIR) $(1)/usr/bin/
 	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/xray $(1)/usr/bin/dline
 	$(INSTALL_DIR) $(1)/etc/dline
@@ -69,4 +69,4 @@ define Package/Dedicated-Line/install
 	$(INSTALL_DATA) ./forceproxy.conf $(1)/etc/dnsmasq.d
 endef
 
-$(eval $(call BuildPackage,Dedicated-Line))
+$(eval $(call BuildPackage,dline))

@@ -7,7 +7,7 @@
 include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI support for Dedicated line
-LUCI_DEPENDS:=+Dedicated-Line
+LUCI_DEPENDS:=+dline
 LUCI_PKGARCH:=all
 
 include $(TOPDIR)/feeds/luci/luci.mk
