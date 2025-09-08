@@ -1,0 +1,85 @@
+#!/bin/sh /etc/rc.common
+# vlmcsd init script for OpenWrt (procd version, with cleanup on reload)
+
+USE_PROCD=1
+START=90
+STOP=10
+
+PROG="/usr/bin/vlmcsd"
+CONFIG_FILE="/etc/vlmcsd/vlmcsd.ini"
+PORT=1688
+
+# 添加 _vlmcs._tcp SRV DNS 记录
+add_vlmcs_entry() {
+    local new_hostname="$1"
+
+    uci -q batch <<-EOF >/dev/null
+        add dhcp srvhost
+        set dhcp.@srvhost[-1].srv=_vlmcs._tcp
+        set dhcp.@srvhost[-1].target=$new_hostname
+        set dhcp.@srvhost[-1].port=$PORT
+        set dhcp.@srvhost[-1].class=0
+        set dhcp.@srvhost[-1].weight=100
+        commit dhcp
+EOF
+
+    /etc/init.d/dnsmasq restart
+}
+
+# 删除所有 _vlmcs._tcp SRV DNS 记录
+remove_vlmcs_entries() {
+    local index=0
+    local deleted=0
+
+    while uci -q get dhcp.@srvhost[$index] >/dev/null; do
+        if [ "$(uci -q get dhcp.@srvhost[$index].srv)" = "_vlmcs._tcp" ]; then
+            uci delete dhcp.@srvhost[$index]
+            deleted=1
+        else
+            index=$((index + 1))
+        fi
+    done
+
+    if [ "$deleted" -eq 1 ]; then
+        uci commit dhcp
+        /etc/init.d/dnsmasq restart
+    fi
+}
+
+start_service() {
+    config_load vlmcsd
+    config_foreach start_instance vlmcsd
+}
+
+start_instance() {
+    local cfg="$1"
+    local enabled
+
+    config_get_bool enabled "$cfg" enabled 0
+
+    [ $enabled != 1 ] && return 1
+
+	local HOSTNAME
+	HOSTNAME="$(uci get system.@system[0].hostname 2>/dev/null || echo OpenWrt)"
+
+	remove_vlmcs_entries
+	add_vlmcs_entry "$HOSTNAME"
+
+	procd_open_instance vlmcsd
+	procd_set_param command "$PROG"
+	procd_append_param command -D
+	procd_append_param command -i "$CONFIG_FILE" 
+	procd_append_param command -L "0.0.0.0:$PORT"
+	procd_set_param respawn
+	procd_set_param stdout 1
+	procd_set_param stderr 1
+	procd_close_instance
+}
+
+stop_service() {
+    remove_vlmcs_entries
+}
+
+service_triggers() {
+    procd_add_reload_trigger "vlmcsd"
+}

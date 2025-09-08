@@ -1,0 +1,21 @@
+{
+    "luci-app-vlmcsd": {
+        "description": "Access control for KMS Server",
+        "read": {
+            "uci": ["vlmcsd"],
+            "fs": {
+                "/etc/vlmcsd/vlmcsd.ini": ["read"],
+                "/usr/sbin/vlmcsd": ["stat"]
+            }
+        },
+        "write": {
+            "uci": ["vlmcsd"],
+            "fs": {
+                "/etc/vlmcsd/vlmcsd.ini": ["write"]
+            },
+            "proc": {
+                "/etc/init.d/vlmcsd": ["exec"]
+            }
+        }
+    }
+}

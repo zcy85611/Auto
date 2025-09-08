@@ -7,7 +7,7 @@ msgstr "基本设置"
 msgid "Config File"
 msgstr "配置文件"
 
-msgid "A KMS Server Emulator to active your Windows or Office"
+msgid "A KMS Server Emulator to activate your Windows or Office"
 msgstr "KMS服务器可用于激活Windows或Office"
 
 msgid "RUNNING"
@@ -16,14 +16,8 @@ msgstr "运行中"
 msgid "NOT RUNNING"
 msgstr "未运行"
 
-msgid "Collecting data..."
-msgstr "收集数据..."
-
 msgid "Enable"
 msgstr "启用"
-
-msgid "Auto activate"
-msgstr "自动激活局域网客户端"
 
 msgid "This file is /etc/vlmcsd/vlmcsd.ini."
 msgstr "这个文件在 /etc/vlmcsd/vlmcsd.ini 下，可以增加新的产品主密钥。"
