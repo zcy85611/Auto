@@ -33,6 +33,7 @@ on:
         - 'cmcc_rax3000m'
         - 'cudy_tr3000-v1-ubootmod'
         - 'cudy_tr3000-256mb-v1'
+        - 'konka_komi-a31'
         - 'cmcc_xr30_nand'
         - 'cmcc_xr30_emmc'
         - 'abt_asr3000'
