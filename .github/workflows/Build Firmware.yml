@@ -34,6 +34,7 @@ on:
         - 'cudy_tr3000-v1-ubootmod'
         - 'cudy_tr3000-256mb-v1'
         - 'konka_komi-a31'
+        - 'netcore_n60-pro'
         - 'cmcc_xr30_nand'
         - 'cmcc_xr30_emmc'
         - 'abt_asr3000'
@@ -252,10 +253,6 @@ jobs:
         [ -n "$(ls package/patches/default/*.patch 2>/dev/null)" ] && cp -rf package/patches/default/*.patch openwrt
         [ -n "$(ls package/patches/feeds/*.patch 2>/dev/null)" ] && cp -rf package/patches/feeds/*.patch openwrt/feeds/packages
         cp -rf package/ubootpatch/495-RAX3000Me-Firmware-AN8855-Support.patch $GITHUB_WORKSPACE/openwrt
-        #cp -rf package/ubootpatch/495-rax3000me-add-crc-support.patch $GITHUB_WORKSPACE/openwrt
-        #cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh.patch openwrt/package/boot/uboot-mediatek/patches/100-20-mtd-spi-nand-add-support-for-FudanMicro-chips.patch
-        #cp -rf package/ubootpatch/495-mtd-spinand-Add-support-fmsh-firmware.patch openwrt/target/linux/mediatek/patches-6.12
-
 
         cp -rf package/luci-app-nfs/nfsd.init openwrt/feeds/packages/net/nfs-kernel-server/files/nfsd.init
         if [ -e router_config/${{ inputs.device }} ];then
