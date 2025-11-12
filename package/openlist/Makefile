@@ -4,16 +4,16 @@
 # This is free software, licensed under the GNU General Public License v3.
 #
 
-include $(TOPDIR)/rules.mk
+nclude $(TOPDIR)/rules.mk
 
 PKG_NAME:=openlist
-PKG_VERSION:=4.1.5
-PKG_WEB_VERSION:=4.1.5
+PKG_VERSION:=4.1.7
+PKG_WEB_VERSION:=4.1.7
 PKG_RELEASE:=1
 
 PKG_SOURCE:=openlist-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/OpenListTeam/OpenList/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=5ddf3f0b7616248862a8b908cffad9437d19053092bc45e8299ad7c95a3626d2
+PKG_HASH:=f1b92628be09ba181decc46423c3e0624b78aedfcd28590990a46ba03d75e5e4
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/OpenList-$(PKG_VERSION)
 
@@ -24,7 +24,7 @@ PKG_MAINTAINER:=sbwml <admin@cooluc.com>
 define Download/openlist-frontend
   FILE:=openlist-frontend-dist-lite-v$(PKG_WEB_VERSION).tar.gz
   URL:=https://github.com/OpenListTeam/OpenList-Frontend/releases/download/v$(PKG_WEB_VERSION)/
-  HASH:=19a079a30fb6658a9122ecce4285abad6c276a9a41b79688b48a601d5fd18896
+  HASH:=2a365c1ce17904926cf275540680f0f24c0c8c3620fcbb98149d7faf781235aa
 endef
 
 PKG_BUILD_DEPENDS:=golang/host
