@@ -4,7 +4,7 @@
 # This is free software, licensed under the GNU General Public License v3.
 #
 
-nclude $(TOPDIR)/rules.mk
+include $(TOPDIR)/rules.mk
 
 PKG_NAME:=openlist
 PKG_VERSION:=4.1.7
