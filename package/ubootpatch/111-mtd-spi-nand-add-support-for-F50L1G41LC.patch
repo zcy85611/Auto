@@ -1,0 +1,56 @@
+diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
+index 0c435059..3672416b 100644
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -1227,6 +1227,9 @@ static const struct spinand_manufacturer *spinand_manufacturers[] = {
+ 	&alliancememory_spinand_manufacturer,
+ 	&ato_spinand_manufacturer,
+ 	&esmt_c8_spinand_manufacturer,
++  &esmt_8c_spinand_manufacturer,
+  &etron_spinand_manufacturer,
+  &fmsh_spinand_manufacturer,
+ 	&foresee_spinand_manufacturer,
+ 	&gigadevice_spinand_manufacturer,
+ 	&macronix_spinand_manufacturer,
+diff --git a/drivers/mtd/nand/spi/esmt.c b/drivers/mtd/nand/spi/esmt.c
+index 6a46f3a3..a970491e 100644
+--- a/drivers/mtd/nand/spi/esmt.c
++++ b/drivers/mtd/nand/spi/esmt.c
+@@ -17,6 +17,7 @@
+ 
+ /* ESMT uses GigaDevice 0xc8 JECDEC ID on some SPI NANDs */
+ #define SPINAND_MFR_ESMT_C8			0xc8
++#define SPINAND_MFR_ESMT_8C			0x8c
+ 
+ #define ESMT_F50L1G41LB_CFG_OTP_PROTECT		BIT(7)
+ #define ESMT_F50L1G41LB_CFG_OTP_LOCK		\
+@@ -224,6 +225,15 @@ static const struct spinand_info esmt_c8_spinand_table[] = {
+ 					      &update_cache_variants),
+ 		     0,
+ 		     SPINAND_ECCINFO(&f50l1g41lb_ooblayout, NULL)),
++  SPINAND_INFO("F50L1G41LC",
++		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_ADDR, 0x2C),
++		     NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1),
++		     NAND_ECCREQ(1, 512),
++		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
++					      &write_cache_variants,
++					      &update_cache_variants),
++		     0,
++		     SPINAND_ECCINFO(&f50l1g41lb_ooblayout, NULL)),
+ };
+ 
+ static const struct spinand_manufacturer_ops esmt_spinand_manuf_ops = {
+diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
+index cf9b9656..c1e0d3ec 100644
+--- a/include/linux/mtd/spinand.h
++++ b/include/linux/mtd/spinand.h
+@@ -361,6 +361,9 @@ struct spinand_manufacturer {
+ extern const struct spinand_manufacturer alliancememory_spinand_manufacturer;
+ extern const struct spinand_manufacturer ato_spinand_manufacturer;
+ extern const struct spinand_manufacturer esmt_c8_spinand_manufacturer;
++extern const struct spinand_manufacturer esmt_8c_spinand_manufacturer;
+ extern const struct spinand_manufacturer etron_spinand_manufacturer;
+ extern const struct spinand_manufacturer fmsh_spinand_manufacturer;
+ extern const struct spinand_manufacturer foresee_spinand_manufacturer;
+ extern const struct spinand_manufacturer gigadevice_spinand_manufacturer;
+ extern const struct spinand_manufacturer macronix_spinand_manufacturer;

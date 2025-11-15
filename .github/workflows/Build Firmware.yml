@@ -255,6 +255,7 @@ jobs:
         [ -n "$(ls package/patches/feeds/*.patch 2>/dev/null)" ] && cp -rf package/patches/feeds/*.patch openwrt/feeds/packages
         cp -rf package/ubootpatch/495-RAX3000Me-Firmware-AN8855-Support.patch $GITHUB_WORKSPACE/openwrt
         cp -rf package/ubootpatch/999-mtd-spinand-esmt-Add-support-for-F50L1G41LC.patch $GITHUB_WORKSPACE/openwrt/target/linux/mediatek/patches-6.12/
+        cp -rf package/ubootpatch/111-mtd-spi-nand-add-support-for-F50L1G41LC.patch $GITHUB_WORKSPACE/openwrt/package/boot/uboot-mediatek/patches
 
         cp -rf package/luci-app-nfs/nfsd.init openwrt/feeds/packages/net/nfs-kernel-server/files/nfsd.init
         if [ -e router_config/${{ inputs.device }} ];then
